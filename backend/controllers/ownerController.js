@@ -5,13 +5,12 @@ const Owner = require('../models/owner');
 //@route GET /api/owner/
 //@access Private
 const getOwner = asyncHandler(async (req, res) => {
-    const owner = await Owner.findOne({ userId: req.user.id }).then(owner => {
-        if(owner){
-            return owner.populate('machines').populate('bookings').execPopulate();
-        }
-    }).catch(err => {
-        console.log(err);
-    });
+    const { userId } = req.body;
+    const owner = await Owner.findOne({ userId })
+    .populate('machines')
+    .populate('bookings')
+    .exec();
+    
     if(!owner) {
         return res.status(404).json({message: 'Owner not found'});
     }

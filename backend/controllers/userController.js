@@ -15,7 +15,7 @@ const getUsers = asyncHandler(async (req, res) => {
 //@route GET /api/user/
 //@access Private
 const getUser = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id).select('-password');
+    const user = await User.findById(req.user.id).select('-password');
     if(!user) {
         return res.status(404).json({message: 'User not found'});
     }
@@ -92,13 +92,10 @@ const updateUser = asyncHandler(async (req, res) => {
         return res.status(404).json({message: 'User not found'});
     }
 
-    const updatedUser = await User.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        {
-            new: true
-        } 
-    );
+    const updatedUser = await User.findByIdAndUpdate(req.user.id, req.body, {
+        new: true,
+        runValidators: true
+    }).select('-password');
     res.status(200).json({message: 'Success',updatedUser});
 });
 

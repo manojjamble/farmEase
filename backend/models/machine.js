@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const machineSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    type: { type: String, required: true }, 
+    company: { type: String, required: true },
     description: { type: String },
     availability: { type: String },
     rentalPrice: { type: Number },

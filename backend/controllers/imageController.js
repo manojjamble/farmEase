@@ -1,5 +1,8 @@
 const asyncHandler = require('express-async-handler');
 const Img = require('../models/Img');
+const multer = require('multer');
+const storage = multer.memoryStorage(); 
+const upload = multer({ storage });
 
 //@desc Get all Imgs
 //@route GET /api/Img

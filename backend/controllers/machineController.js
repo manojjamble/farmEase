@@ -27,9 +27,9 @@ const getMachine = asyncHandler(async (req, res) => {
 //@route POST /api/machine
 //@access Public
 const createMachine = asyncHandler(async (req, res) => {
-    const {name, type, description, availability, rentalPrice, ownerId, img, condition, reviews} = req.body;
+    const {name, type, category, description, availability, rentalPrice, ownerId, img, condition} = req.body;
     const machine = new Machine({
-        name, type, description, availability, rentalPrice, ownerId, img, condition, reviews
+        name, type, category, description, availability, rentalPrice, ownerId, img, condition
     });
     machine.save().then(machine => {
         res.status(201).json({message: 'Machine created', machine});

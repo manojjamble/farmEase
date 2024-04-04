@@ -21,13 +21,13 @@ const Products = () => {
         <input
           type="text"
           placeholder="search by location"
-          className="p-2 w-[20rem] border border-gray-500"
+          className="p-2 w-[25rem] border border-gray-500"
         />
         <div className=" space-x-5 flex">
           <input
             type="text"
             placeholder="search by Tools"
-            className="p-2 w-[45rem] border border-gray-500"
+            className="p-2 w-[50rem] border border-gray-500"
           />
           <button className="p-2 bg-green-900 text-white w-[10rem]">
             search

@@ -1,7 +1,44 @@
 import React from "react";
 import Navbar from "../components/Navbar.jsx";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
 
 const Contact = () => {
+
+  const navigate = useNavigate();
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  
+  const [message, setMessage] = useState(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    mobile: '',
+    message: ''
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${BASE_URL}api/contact`, formData);
+      console.log(response.data); 
+      setMessage({ text: "Message Send Successfully.", error: false });
+      setFormData({
+        name: "",
+        mobile: "",
+        message: ""
+      });
+    } catch (error) {
+      console.error('Error Sending Message : ', error.response.data);
+    }
+  };
+
   return (
     <div className="bg-[#246f423d]">
       <div className="">
@@ -48,7 +85,7 @@ const Contact = () => {
           </div>
         </div>
         <form
-          action=""
+          onSubmit={handleSubmit}
           className="w-full my-auto bg-[#246f423d] h-3/4 px-20 py-16 shadow-lg"
         >
           <p className="text-4xl font-bold text-[#2f7678c3]">
@@ -65,6 +102,8 @@ const Contact = () => {
               className="border border-gray-300 rounded-md px-4 py-2 w-full"
               type="text"
               name="name"
+              value={formData.name}
+              onChange={handleChange}
               required
             />
           </div>
@@ -78,7 +117,9 @@ const Contact = () => {
             <input
               className="border border-gray-300 rounded-md px-4 py-2 w-full"
               type="number"
-              name="name"
+              name="mobile"
+              value={formData.mobile}
+              onChange={handleChange}
               required
             />
           </div>
@@ -92,7 +133,9 @@ const Contact = () => {
             <textarea
               className="border border-gray-300 rounded-md px-4 py-2 w-full"
               type="textarea"
-              name="name"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
               required
             />
           </div>
@@ -101,6 +144,11 @@ const Contact = () => {
               Send My Message
             </button>
           </div>
+          {message && (
+            <div className={`text-${message.error ? "red" : "green"}-500`}>
+              {message.text}
+            </div>
+          )}
         </form>
       </div>
     </div>

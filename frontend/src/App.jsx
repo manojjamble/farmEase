@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import Contact from './pages/Contact';
 import About from './pages/About';
 import ProductDetails from './pages/Productdetails';
+import ProductRegistrationPage from './pages/ProductRegistrationPage';
 
 
 const App = () => {
@@ -21,7 +22,8 @@ const App = () => {
         <Route path='/register' element={<Register />} />
         <Route path='/contact' element={<Contact/>} />
         <Route path='/about' element={<About/>} />
-        <Route path='//products/:id' element={<ProductDetails/>} />
+        <Route path='/products/:id' element={<ProductDetails/>} />
+        <Route path='/product_add' element={<ProductRegistrationPage/>} />
 
         
         {/* Add more Route components for other pages as needed */}

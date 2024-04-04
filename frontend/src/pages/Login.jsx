@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import { Link , useNavigate } from 'react-router-dom';
 import { TextField } from '@mui/material';
 import axios from 'axios';
-
+import Navbar from '../components/Navbar';
 function Login() {
 
   const navigate = useNavigate();
-
-
-
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [formData, setFormData] = useState({
     mobile: '',
     password: ''
@@ -24,7 +22,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/user/login', formData);
+      const response = await axios.post(`${BASE_URL}/api/user/login`, formData);
       console.log(response.data); // Log response for debugging
       const { message, user, token } = response.data;
       // Here you can handle the successful login, such as redirecting the user
@@ -48,6 +46,7 @@ function Login() {
           <h2 className='text-2xl text-zinc-800 font-bold'>AgroRent</h2>
         </div>
       </div> */}
+      <Navbar/>
 
       {/* form------------------- */}
       <div className='flex justify-around mt-[64px] p-10 '>

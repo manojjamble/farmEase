@@ -4,7 +4,10 @@ const connectDB = require('./config/dbConnection');
 const errorHandler = require('./middleware/errorHandler');
 const User = require('./models/user');
 const swagger = require('./swagger');
+const cors = require('cors')
 
+
+  
 connectDB();
 const app = express();
 const port = process.env.PORT || 3000;
@@ -15,6 +18,12 @@ const storage = multer.memoryStorage(); // Store file in memory
 const upload = multer({ storage });
 
 app.use(express.json());
+const corsOptions = {
+  origin: 'http://localhost:5173', // Replace with your frontend URL
+  optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions));
 
 // Route to handle file upload
 app.post('/upload', upload.single('avatar'), async (req, res) => {

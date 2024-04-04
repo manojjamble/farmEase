@@ -1,13 +1,31 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 import Pagination from "@mui/material/Pagination";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import axios from "axios"
 
 const Products = () => {
   const sortArray = ["Top Rated", "Low Rated", "for sample"];
+  const [machines, setMachines] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-  // getting token from network
+  useEffect(() => {
+    const fetchMachines = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/api/machine/all`);
+        console.log(response.data); 
+        setMachines(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching machines:', error.message);
+      }
+    };
+
+    fetchMachines();
+  }, []);
+  
  
   
 

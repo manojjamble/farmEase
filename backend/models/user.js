@@ -5,11 +5,15 @@ const userSchema = new mongoose.Schema({
     mobile: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     age: { type: Number },
-    role: { type: String, required: true, default: 'farmer' },
+    role: { type: String, default: 'farmer' },
     registrationDate: { type: Date, default: Date.now },
-    avatar: { type: String , default: 'https://res.cloudinary.com/djnv06fje/image/upload/v1617322354/avatars/avatar-1_ukzj6v.png'},
-    locationId: { type: mongoose.Schema.Types.ObjectId, ref: 'Location' },
-    bookings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Booking' }]
+    avatar: { type: Buffer, default: null },
+    address: { type: String },
+    city: { type: String },
+    state: { type: String },
+    zipCode: {type : Number},
+    bookings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Booking' }],
+    isVerified: { type: Boolean, default: false }
 });
 
 const User = mongoose.model('User', userSchema);

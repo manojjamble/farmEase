@@ -2,13 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-    const handleLogout = () => {
-        // Remove token from localStorage or wherever it's stored
-        localStorage.clear();
-        console.log('Logout successful');
-        // Redirect user to the login page or any other desired page
-        // Replace '/login' with the appropriate route
-        window.location.href = '/login';
+    const handleLogout = async () => {
+        try {
+            const response = await axios.get('/api/logout');
+            if (response.status === 200) {
+                // Redirect to the login page or home page after successful logout
+                window.location.href = '/login';
+            }
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (

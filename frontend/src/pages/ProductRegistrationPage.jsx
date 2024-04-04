@@ -9,17 +9,17 @@ function ProductRegistrationPage() {
         description: '',
         rentalPrice: '',
         condition: '',
-        images: [] // Store uploaded images
+        images: [] 
     });
 
     const [additionalImages, setAdditionalImages] = useState([]);
-
     const [stage, setStage] = useState(1);
+    const [savedFormData, setSavedFormData] = useState(null);
+    const [savedAdditionalImages, setSavedAdditionalImages] = useState(null);
 
     const handleRemoveImage = keyToRemove => {
         setAdditionalImages(currentImages => currentImages.filter(img => img.key !== keyToRemove));
     };
-
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -36,7 +36,6 @@ function ProductRegistrationPage() {
         }));
     };
 
-
     const handleAdditionalImageChange = (e, index) => {
         const file = e.target.files[0];
         setAdditionalImages(prevImages => prevImages.map((img, i) => {
@@ -47,8 +46,6 @@ function ProductRegistrationPage() {
         }));
     };
 
-
-
     const handleAddMoreImages = () => {
         setAdditionalImages(prevImages => [
             ...prevImages,
@@ -56,11 +53,12 @@ function ProductRegistrationPage() {
         ]);
     };
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (stage === 1) {
-            setStage(2); // Move to the next stage
+            setSavedFormData({ ...formData });
+            setSavedAdditionalImages([...additionalImages]);
+            setStage(2); 
         } else if (stage === 2) {
             setStage(3);
         } else {
@@ -79,8 +77,6 @@ function ProductRegistrationPage() {
                 });
 
 
-
-
                 setFormData({
                     name: '',
                     company: '',
@@ -90,30 +86,30 @@ function ProductRegistrationPage() {
                     images: []
                 });
                 setAdditionalImages([]);
-                console.log('kkkkk'); // Assuming the response contains the newly created
+                setSavedFormData(null);
+                setSavedAdditionalImages(null);
                 setStage(1);
             } catch (error) {
                 console.error('Error creating product:', error);
-                // Handle error, maybe show an error message to the user
             }
         }
     };
-    const handleback = () => {
+
+    const handleBack = () => {
         if (stage === 2) {
             setStage(1);
-        }
-        else if (stage === 3) {
+        } else if (stage === 3) {
+            setFormData(savedFormData);
+            setAdditionalImages(savedAdditionalImages);
             setStage(2);
-
-        };
-
+        }
     };
 
     return (
         <div>
             <Navbar />
             <div className="container mt-28 flex flex-col">
-                <h1 className="text-3xl font-semibold mb-4  p-4"> Product Registration - Stage {stage}</h1>
+                <h1 className="text-3xl font-semibold mb-4 p-4"> Product Registration - Stage {stage}</h1>
                 <form onSubmit={handleSubmit}>
                     {stage === 1 && (
                         <div className='p-4 w-[60%] m-auto'>
@@ -141,7 +137,7 @@ function ProductRegistrationPage() {
                     )}
                     {stage === 2 && (
                         <div>
-                            <button className="bg-green-500 hover:bg-green-600 mt-5 text-white font-bold mb-2 py-2 px-4 rounded" type="button" onClick={handleback}>back</button>
+                            <button className="bg-green-500 hover:bg-green-600 mt-5 text-white font-bold mb-2 py-2 px-4 rounded" type="button" onClick={handleBack}>Back</button>
 
                             <div className="mb-4">
                                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="mainImage">Upload Main Image:</label>
@@ -156,18 +152,14 @@ function ProductRegistrationPage() {
                                 </div>
                             ))}
 
-
                             <button className="mb-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" type="button" onClick={handleAddMoreImages}>Add More Images</button>
 
                         </div>
-
                     )}
                     {stage === 3 && (
-
                         <div>
                             <div>
-                                <button className="bg-green-500 hover:bg-green-600 mt-5 mb-2 text-white font-bold py-2 px-4 rounded" type="button" onClick={handleback}>back</button>
-
+                                <button className="bg-green-500 hover:bg-green-600 mt-5 mb-2 text-white font-bold py-2 px-4 rounded" type="button" onClick={handleBack}>Back</button>
                             </div>
                             <div className="bg-lime-300 mt-5 shadow-md p-6 rounded-lg">
                                 <h2 className="text-4xl font-semibold mb-4">Product Preview</h2>
@@ -193,25 +185,25 @@ function ProductRegistrationPage() {
                                 </div>
                                 <div className="mb-4">
                                     <h3 className="text-lg font-semibold mb-2">Thumbnail Image</h3>
-                                    <img className="w-full max-w-lg rounded-md" src={URL.createObjectURL(formData.images)} alt="Main Product" />
+                                    {formData.images && (
+                                        <img className="w-full max-w-lg rounded-md" src={URL.createObjectURL(formData.images)} alt="Main Product" />
+                                    )}
                                 </div>
-
                                 <div className="mb-4">
                                     <h3 className="text-lg font-semibold mb-2">Additional Images</h3>
                                     <div className="grid grid-cols-2 gap-4">
                                         {additionalImages.map((image, index) => (
                                             <div key={index} className="w-full">
-                                                <img className="w-full h-full rounded-md object-cover" src={URL.createObjectURL(image)} alt={`Additional Image ${index}`} />
+                                                {image.file && (
+                                                    <img className="w-full h-full rounded-md object-cover" src={URL.createObjectURL(image.file)} alt={`Additional Image ${index}`} />
+                                                )}
                                             </div>
                                         ))}
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     )}
-
                     <button className="bg-green-500   hover:bg-green-600 mt-5 text-white font-bold px-4 py-2 rounded" type="submit">{stage === 1 ? 'Next' : stage === 2 ? 'Next' : 'Submit'}</button>
                 </form>
             </div>

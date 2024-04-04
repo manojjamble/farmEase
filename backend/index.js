@@ -3,6 +3,7 @@ const dotenv = require('dotenv').config();
 const connectDB = require('./config/dbConnection');
 const errorHandler = require('./middleware/errorHandler');
 const User = require('./models/user');
+const swagger = require('./swagger');
 
 connectDB();
 const app = express();
@@ -36,6 +37,7 @@ app.use("/api/review", require("./routes/review"));
 app.use("/api/payment", require("./routes/payment"));
 app.use("/api/notification", require("./routes/notification"));
 app.use("/api/image", require("./routes/image"));
+app.use(swagger);
 app.use(errorHandler);
 
 app.listen(port, () => {

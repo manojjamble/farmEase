@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
     address: { type: String },
     city: { type: String },
     state: { type: String },
-    
+    zipCode: {type : Number},
     bookings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Booking' }],
     isVerified: { type: Boolean, default: false }
 });

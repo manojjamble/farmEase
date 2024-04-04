@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { route } = require('../routes/user');
 
 //@desc Get all users
 //@route GET /api/user
@@ -43,13 +44,23 @@ const loginUser = asyncHandler(async (req, res) => {
         } }, 
         process.env.JWT_SECRET, 
         { expiresIn: '1h' });
-        console.log(token);
+        user.password = undefined;
+        res.setHeader('Authorization', 'Bearer ' + token);
         res.status(200).json({message: 'Success',user, token});
     }else{
         res.status(401).json({message: 'Invalid name or password'});
     }
 });
  
+//@desc logout User 
+//@route POST /api/user/logout
+//@access Public
+const logoutUser = asyncHandler(async (req, res) => {
+    // logout user
+    // delete token
+    
+    res.status(200).json({message: 'Success',user});
+});
 
 //@desc Register user
 //@route POST /api/user
@@ -111,4 +122,4 @@ const deleteUser = asyncHandler(async (req, res) => {
     res.status(200).json({message: 'Success',user});
 });
 
-module.exports = { getUsers, loginUser, getUser, createUser, updateUser, deleteUser };
+module.exports = { getUsers, loginUser, logoutUser, getUser, createUser, updateUser, deleteUser };

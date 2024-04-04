@@ -45,6 +45,7 @@ app.use("/api/booking", require("./routes/booking"));
 app.use("/api/review", require("./routes/review"));
 app.use("/api/payment", require("./routes/payment"));
 app.use("/api/notification", require("./routes/notification"));
+app.use("/api/contact", require("./routes/contact"));
 app.use("/api/image", require("./routes/image"));
 app.use(swagger);
 app.use(errorHandler);

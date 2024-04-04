@@ -14,6 +14,12 @@ const Products = () => {
   useEffect(() => {
     const fetchMachines = async () => {
       try {
+        // Retrieve token from localStorage
+        const token = localStorage.getItem('token');
+
+        // Include token in request headers
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
         const response = await axios.get(`${BASE_URL}/api/machine/all`);
         console.log(response.data); 
         setMachines(response.data);

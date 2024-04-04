@@ -27,6 +27,7 @@ const getMachine = asyncHandler(async (req, res) => {
 //@route POST /api/machine
 //@access Public
 const createMachine = asyncHandler(async (req, res) => {
+    console.log(" create machine ");
     const {name, type, category, description, availability, rentalPrice, ownerId, img, condition} = req.body;
     const machine = new Machine({
         name, type, category, description, availability, rentalPrice, ownerId, img, condition

@@ -44,7 +44,7 @@ const loginUser = asyncHandler(async (req, res) => {
         process.env.JWT_SECRET, 
         { expiresIn: '2h' });
         console.log(token);
-        res.setHeader('Authorization' , 'Bearer' + token);
+        res.setHeader('Authorization' , 'Bearer ' + token);
         res.status(200).json({message: 'Success',user, token});
     }else{
         res.status(401).json({message: 'Invalid name or password'});

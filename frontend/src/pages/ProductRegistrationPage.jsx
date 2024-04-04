@@ -72,11 +72,11 @@ function ProductRegistrationPage() {
                 formDataToSend.append('rentalPrice', formData.rentalPrice);
                 formDataToSend.append('condition', formData.condition);
                 formDataToSend.append('mainImage', formData.images);
-               additionalImages.forEach((imageObj, index) => {
-    if (imageObj.file) { // Make sure the file exists
-        formDataToSend.append(`additionalImage${index}`, imageObj.file);
-    }
-});
+                additionalImages.forEach((imageObj, index) => {
+                    if (imageObj.file) { // Make sure the file exists
+                        formDataToSend.append(`additionalImage${index}`, imageObj.file);
+                    }
+                });
 
 
 
@@ -114,7 +114,7 @@ function ProductRegistrationPage() {
             <Navbar />
             <div className="container mt-28 flex flex-col">
                 <h1 className="text-3xl font-semibold mb-4  p-4"> Product Registration - Stage {stage}</h1>
-                <form   onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}>
                     {stage === 1 && (
                         <div className='p-4 w-[60%] m-auto'>
                             <div className="mb-4">

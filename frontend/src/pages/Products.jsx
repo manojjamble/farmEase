@@ -7,6 +7,10 @@ import Footer from "../components/Footer";
 const Products = () => {
   const sortArray = ["Top Rated", "Low Rated", "for sample"];
 
+  // getting token from network
+ 
+  
+
   return (
     <div>
       <div className="mb-24">

@@ -26,7 +26,10 @@ function Login() {
     try {
       const response = await axios.post('http://localhost:3000/api/user/login', formData);
       console.log(response.data); // Log response for debugging
-
+      const { message, user, token } = response.data;
+      // Here you can handle the successful login, such as redirecting the user
+      localStorage.setItem('token', token);
+      console.log('message',message, 'user',user, 'token',token);
       navigate('/products');
     } catch (error) {
       console.error('Login failed:', error.response.data);

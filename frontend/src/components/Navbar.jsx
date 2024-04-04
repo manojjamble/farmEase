@@ -2,6 +2,18 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
+    const handleLogout = async () => {
+        try {
+            const response = await axios.get('/api/logout');
+            if (response.status === 200) {
+                // Redirect to the login page or home page after successful logout
+                window.location.href = '/login';
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <nav className='navbar p-2 px-8 w-full h-16 flex items-center bg-[#f7f7f8b8] fixed top-0 z-10 font-semibold'>
             <div className='flex align-center items-center justify-start gap-2 w-1/3'>
@@ -21,7 +33,9 @@ const Navbar = () => {
                     <img src="../src/assets/avatar.jpg" alt="" className='rounded-full w-10 object-cover' />
                     <h1 className='text-xl text-zinc-800 '>Username</h1>
                 </div>
-                <button className="bg-[#b2d8b4] hover:bg-[#9fd39b] text-black font-bold py-2 px-4 rounded"><i className="ri-logout-box-r-line"></i> Logout</button>
+                <button onClick={handleLogout} className="bg-[#b2d8b4] hover:bg-[#9fd39b] text-black font-bold py-2 px-4 rounded">
+                    <i className="ri-logout-box-r-line"></i> Logout
+                </button>
             </div>
         </nav>
     );

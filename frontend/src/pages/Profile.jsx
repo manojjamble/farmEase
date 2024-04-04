@@ -4,6 +4,7 @@ import Footer from '../components/Footer'
 
 
 const Profile = () => {
+    
     const [selectedView, setSelectedView] = useState('myTools');
 
     const user = {

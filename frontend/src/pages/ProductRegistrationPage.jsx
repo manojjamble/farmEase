@@ -270,7 +270,7 @@ function ProductRegistrationPage() {
                     Product Preview
                   </h2>
 
-                  <div className="bg-lime-300 mt-5 shadow-md p-6 rounded-lg">
+                  <div className="bg-teal-100 mt-5 shadow-md p-6 rounded-lg">
                     <div className="p-4 grid grid-cols-2">
                       <div className="mb-4">
                         <p className="text-lg font-semibold">Name:</p>
@@ -299,20 +299,20 @@ function ProductRegistrationPage() {
                         <p className="text-gray-800">{formData.company}</p>
                       </div>
                     </div>
-                    <div className="mb-4">
-                      <h3 className="text-lg font-semibold mb-2">
+                    <div className="mb-4 flex flex-col justify-center items-center">
+                      <h3 className="text-xl font-semibold mb-4">
                         Thumbnail Image
                       </h3>
                       {formData.images && (
                         <img
-                          className="w-full max-w-lg rounded-md"
+                          className="w-full  max-w-lg border border-5 border-teal-300 rounded-md"
                           src={URL.createObjectURL(formData.images)}
                           alt="Main Product"
                         />
                       )}
                     </div>
-                    <div className="mb-4">
-                      <h3 className="text-lg font-semibold mb-2">
+                    <div className="mb-4 flex flex-col justify-center items-center">
+                      <h3 className="text-xl font-semibold mb-4">
                         Additional Images
                       </h3>
                       <div className="grid grid-cols-2 gap-4">
@@ -320,7 +320,7 @@ function ProductRegistrationPage() {
                           <div key={index} className="w-full">
                             {image.file && (
                               <img
-                                className="w-full h-full rounded-md object-cover"
+                                className="w-full h-full border border-5 border-teal-300  rounded-md object-cover"
                                 src={URL.createObjectURL(image.file)}
                                 alt={`Additional Image ${index}`}
                               />

@@ -24,6 +24,8 @@ const App = () => {
         <Route path='/about' element={<About/>} />
         <Route path='/products/:id' element={<ProductDetails/>} />
         <Route path='/product_add' element={<ProductRegistrationPage/>} />
+        <Route path='/about' element={<About/>} />
+
 
         
         {/* Add more Route components for other pages as needed */}

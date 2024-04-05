@@ -37,7 +37,7 @@ app.post('/upload', upload.single('avatar'), async (req, res) => {
       res.status(500).send('Internal Server Error');
     }
   });
-
+console.log("New Request");
 app.use("/api/user", require("./routes/user"));
 app.use("/api/owner", require("./routes/owner"));
 app.use("/api/machine", require("./routes/machine"));

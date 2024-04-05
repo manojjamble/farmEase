@@ -1,14 +1,17 @@
 const asyncHandler = require('express-async-handler');
 const Img = require('../models/image');
+const Machine = require('../models/machine');
 const multer = require('multer');
+const { response } = require('express');
 const storage = multer.memoryStorage(); 
 const upload = multer({ storage });
 
 //@desc Get all Imgs
-//@route GET /api/Img
+//@route GET /api/image/all
 //@access Private
 const getImgs = asyncHandler(async (req, res) => {
-    const { machineId } = req.body;
+    const { machineId } = req.query;
+    console.log(machineId);
     const imgs = await Img.find({ machineId });
     res.status(200).json(imgs);    
 });
@@ -48,7 +51,14 @@ const createImg = asyncHandler(async (req, res) => {
           let imgId = newImg._id;
           // update machine add imgId
           const machine = await Machine.findById(machineId);
-          machine.img.push(imgId);
+          console.log(machineId,machine);
+          // Initialize imgIds array if it doesn't exist
+            if (!machine.img) {
+                machine.img = [];
+            }
+            
+            // Push the imgId into the imgIds array
+            machine.img.push(imgId);
           await machine.save();
           await newImg.save();
           newImages.push(newImg);

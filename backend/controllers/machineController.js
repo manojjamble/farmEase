@@ -28,10 +28,13 @@ const getMachine = asyncHandler(async (req, res) => {
 //@access Public
 const createMachine = asyncHandler(async (req, res) => {
     console.log(" create machine ");
-    const {name, type, category, description, availability, rentalPrice } = req.body;
+    const formData = req.body;
     const ownerId = req.user.id;
+    
+    console.log(ownerId);
+    console.log(formData);
     const machine = new Machine({
-        name, type, category, description, availability, rentalPrice, ownerId
+        ...formData, ownerId
     });
     machine.save().then(machine => {
         res.status(201).json({message: 'Machine created', machine});
@@ -44,11 +47,11 @@ const createMachine = asyncHandler(async (req, res) => {
 //@route PUT /api/machine/
 //@access Public
 const updateMachine = asyncHandler(async (req, res) => {
-    const { machineId, name, type, description, availability, rentalPrice} = req.body;
+    const { machineId, name, company, description, availability, rentalPrice} = req.body;
     const machine = await Machine.findById(machineId);
     if(machine){
         machine.name = name;
-        machine.type = type;
+        machine.company = company;
         machine.description = description;
         machine.availability = availability;
         machine.rentalPrice = rentalPrice;

@@ -246,6 +246,7 @@ function ProductRegistrationPage() {
             </form>
           </div>
         </div>
+
       </div>
     </div>
   );

@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import { Link , useNavigate } from 'react-router-dom';
 import { TextField } from '@mui/material';
 import axios from 'axios';
-
+import Navbar from '../components/Navbar';
 function Login() {
 
   const navigate = useNavigate();
-
-
-
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [formData, setFormData] = useState({
     mobile: '',
     password: ''
@@ -24,7 +22,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/user/login', formData);
+      const response = await axios.post(`${BASE_URL}/api/user/login`, formData);
       console.log(response.data); // Log response for debugging
       const { message, user, token } = response.data;
       // Here you can handle the successful login, such as redirecting the user
@@ -48,10 +46,11 @@ function Login() {
           <h2 className='text-2xl text-zinc-800 font-bold'>AgroRent</h2>
         </div>
       </div> */}
+      <Navbar/>
 
       {/* form------------------- */}
       <div className='flex justify-around mt-[64px] p-10 '>
-        <div className='w-1/4 flex-col bg-blue-200 p-4 rounded-lg'>
+        <div className='w-1/4 flex-col p-4 pt-40 rounded-lg'>
           {/* Form */}
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <label htmlFor="mobile" className="text-md mb-[-10px] ">Mobile Number:</label>
@@ -63,7 +62,7 @@ function Login() {
         </div>
 
         {/* Big Image */}
-        <div className='w-1/3 flex-col bg-green-600 p-4 rounded-lg '>
+        <div className='w-1/3 flex-col p-4 rounded-lg '>
           <img src="../src/assets/hero.png" alt="Big Image" className="w-full rounded-lg" />
         </div>
       </div>

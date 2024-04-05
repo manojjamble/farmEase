@@ -2,15 +2,23 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TextField } from '@mui/material';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     mobile: '',
     password: '',
     age: '',
     role: 'farmer',
-    avatar: 'https://res.cloudinary.com/djnv06fje/image/upload/v1617322354/avatars/avatar-1_ukzj6v.png',
+    address: '',
+    city: '',
+    state: '',
+    zipCode: '',
+
+    // avatar: 'https://res.cloudinary.com/djnv06fje/image/upload/v1617322354/avatars/avatar-1_ukzj6v.png',
 
   });
 
@@ -25,10 +33,12 @@ function Register() {
     e.preventDefault();
     try {
       console.log(formData);
-      const response = await axios.post('http://localhost:3000/api/user', formData);
+      const response = await axios.post(`${BASE_URL}/api/user/`, formData);
       console.log(response.data); // Log response for debugging
-      // Here you can handle the successful registration, such as redirecting the user
-    } catch (error) {
+
+      navigate('/login');
+      
+    } catch (error) { 
       console.error('Registration failed:', error.response.data);
       // Here you can handle registration errors, such as displaying an error message to the user
     }
@@ -48,8 +58,9 @@ function Register() {
 
       {/* form------------------- */}
       <div className='flex justify-around mt-[64px] p-10 '>
-        <div className='w-1/4 flex-col bg-blue-200 p-4 rounded-lg'>
+        <div className='w-1/4 flex-col p-4 rounded-lg'>
           {/* Form */}
+
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <label htmlFor="name" className="text-md mb-[-10px] ">Name:</label>
             <TextField id="name" name='name' label="Name" variant="standard" value={formData.name} onChange={handleChange} />
@@ -59,13 +70,21 @@ function Register() {
             <TextField id="password" name="password" label="Password" type="password" autoComplete="current-password" variant='standard' value={formData.password} onChange={handleChange} />
             <label htmlFor="age" className="text-md mb-[-10px] ">Age:</label>
             <TextField id="age" name='age' label="Age" variant="standard" value={formData.age} onChange={handleChange} />
+            <label htmlFor="address" className="text-md mb-[-10px] ">Address:</label>
+            <TextField id="address" name='address' label="Address" variant="standard" value={formData.address} onChange={handleChange} />
+            <label htmlFor="city" className="text-md mb-[-10px] ">City:</label>
+            <TextField id="city" name='city' label="City" variant="standard" value={formData.city} onChange={handleChange} />
+            <label htmlFor="state" className="text-md mb-[-10px] ">State:</label>
+            <TextField id="state" name='state' label="State" variant="standard" value={formData.state} onChange={handleChange} />
+            <label htmlFor="zipCode" className="text-md mb-[-10px] ">Zip Code:</label>
+            <TextField id="zipCode" name='zipCode' label="Zip Code" variant="standard" value={formData.zipCode} onChange={handleChange} />
             <button type="submit" className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600">Register</button>
           </form>
         </div>
 
         {/* Big Image */}
-        <div className='w-1/3 flex-col bg-green-600 p-4 rounded-lg '>
-          <img src="../src/assets/hero.png" alt="Big Image" className="w-full rounded-lg" />
+        <div className='w-1/3 flex-col p-4 rounded-lg '>
+          <img src="../src/assets/hero.png" alt="Big Image" className="w-full rounded-lg" />  
         </div>
       </div>
     </div>

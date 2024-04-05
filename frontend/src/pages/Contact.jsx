@@ -1,7 +1,44 @@
 import React from "react";
 import Navbar from "../components/Navbar.jsx";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
 
 const Contact = () => {
+
+  const navigate = useNavigate();
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  
+  const [message, setMessage] = useState(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    mobile: '',
+    message: ''
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${BASE_URL}/api/contact`, formData);
+      console.log(response.data); 
+      setMessage({ text: "Message Send Successfully.", error: false });
+      setFormData({
+        name: "",
+        mobile: "",
+        message: ""
+      });
+    } catch (error) {
+      console.error('Error Sending Message : ', error.response.data);
+    }
+  };
+
   return (
     <div className="bg-[#246f423d]">
       <div className="">
@@ -107,6 +144,7 @@ const Contact = () => {
             </div>
           </form>
         </div>
+          
       </div>
     </div>
   );

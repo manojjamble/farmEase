@@ -1,15 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
     const handleLogout = async () => {
         try {
-            const response = await axios.get('/api/logout');
-            if (response.status === 200) {
-                // Redirect to the login page or home page after successful logout
-                window.location.href = '/login';
-            }
-        } catch (error) {
+            const navigate = useNavigate();
+            
+            // Clear the token from local storage
+            localStorage.removeItem('token');
+            
+            // Navigate to the login page
+            navigate('/login');
+        }
+        catch (error) {
             console.error(error);
         }
     };

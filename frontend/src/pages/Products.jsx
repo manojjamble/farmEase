@@ -1,13 +1,37 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 import Pagination from "@mui/material/Pagination";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import axios from "axios"
 
 const Products = () => {
   const sortArray = ["Top Rated", "Low Rated", "for sample"];
+  const [machines, setMachines] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-  // getting token from network
+  useEffect(() => {
+    const fetchMachines = async () => {
+      try {
+        // Retrieve token from localStorage
+        const token = localStorage.getItem('token');
+
+        // Include token in request headers
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+        const response = await axios.get(`${BASE_URL}/api/machine/all`);
+        console.log(response.data); 
+        setMachines(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching machines:', error.message);
+      }
+    };
+
+    fetchMachines();
+  }, []);
+  
  
   
 
@@ -56,7 +80,7 @@ const Products = () => {
 
       <div className="p-10">
         <div className="mt-10">
-          <p className="text-3xl font-bold my-5">Tracters</p>
+          <p className="text-3xl font-bold my-5">Tractors</p>
           <div className="w-full grid grid-cols-4 gap-10">
             {[1, 1, 1, 1].map(() => (
               <div className="flex justify-center">

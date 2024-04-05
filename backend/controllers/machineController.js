@@ -13,7 +13,7 @@ const getMachines = asyncHandler(async (req, res) => {
 //@route GET /api/machine/
 //@access Private
 const getMachine = asyncHandler(async (req, res) => {
-    const {machineId} = req.body;
+    const {machineId} = req.query;
     const machine = await Machine.findById(machineId);
     if(machine){
         res.status(200).json({ message : "Success",machine});

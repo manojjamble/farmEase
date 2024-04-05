@@ -10,6 +10,7 @@ import About from './pages/About';
 import ProductDetails from './pages/Productdetails';
 import ProductRegistrationPage from './pages/ProductRegistrationPage';
 import Image from './pages/Image';
+import ProductInfoCard from './components/ProductInfoCard/ProductInfoCard';
 
 
 const App = () => {
@@ -23,8 +24,9 @@ const App = () => {
         <Route path='/register' element={<Register />} />
         <Route path='/contact' element={<Contact/>} />
         <Route path='/about' element={<About/>} />
-        <Route path='/products/:id' element={<ProductDetails/>} />
+        <Route path='/product/:id' element={<ProductDetails/>} />
         <Route path='/add_tools' element={<ProductRegistrationPage/>} />
+        <Route path='/info_card' element={<ProductInfoCard/>} />
         <Route path='/about' element={<About/>} />
         <Route path='/trial' element={<Image />} />
 

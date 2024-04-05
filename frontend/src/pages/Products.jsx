@@ -12,6 +12,16 @@ const Products = () => {
   const [loading, setLoading] = useState(true);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
+
+  const [displayedCategories, setDisplayedCategories] = useState(4); // Number of categories to display initially
+  const [allCategoriesLoaded, setAllCategoriesLoaded] = useState(false);
+
+  const handleLoadMoreCategories = () => {
+    // Display all available categories
+    setDisplayedCategories(displayedCategories + 4);
+    // setAllCategoriesLoaded(true);
+  };
+
   useEffect(() => {
     const fetchMachines = async () => {
       try {
@@ -20,7 +30,7 @@ const Products = () => {
 
         const response = await axios.get(`${BASE_URL}/api/machine/all`);
 
-        console.log("response data is " , response.data);
+        console.log("response data is ", response.data);
         const machinesData = response.data;
         const sortedMachines = machinesData.reduce((acc, machine) => {
           if (!acc[machine.category]) {
@@ -32,7 +42,7 @@ const Products = () => {
         }, {});
 
         //getting  category wise sorted machine data
-        console.log("machine by categories " ,sortedMachines);
+        console.log("machine by categories ", sortedMachines);
         setMachinesByCategory(sortedMachines);
 
         setMachines(response.data);
@@ -47,21 +57,22 @@ const Products = () => {
   }, []);
 
 
-
-
   return (
     <div>
       <div className="mb-24">
         <Navbar />
       </div>
 
+      {/* Search bar */}
       <div className="flex justify-between bg-slate-50 px-10">
+        {/* Location search input , yet to add */}
         <input
           type="text"
           placeholder="search by location"
           className="p-2 w-[25rem] border border-gray-500"
         />
-        <div className=" space-x-5 flex">
+        {/* Tool search input   ,yet to add*/}
+        <div className="space-x-5 flex">
           <input
             type="text"
             placeholder="search by Tools"
@@ -73,8 +84,10 @@ const Products = () => {
         </div>
       </div>
 
+      {/* Sort dropdown */}
       <div className="px-10 mt-7 float-end">
         <select
+      // yet to add sort feature
           onChange={() => { }}
           value=""
           className="w-[8rem] text-gray-800 p-3 text-sm outline-none border border-gray-300 rounded-md focus:outline-none"
@@ -92,41 +105,41 @@ const Products = () => {
         </select>
       </div>
 
+      {/* Category-wise machines */}
       <div className="p-10">
-        <div className="mt-10">
-          <p className="text-3xl font-bold my-5">Tractors</p>
-          <div className="w-full grid grid-cols-4 gap-10">
-            {[1, 1, 1, 1].map(() => (
-              <div className="flex justify-center">
-                <ProductCard />
-              </div>
-            ))}
+        {Object.entries(machinesByCategory).slice(0, displayedCategories).map(([category, machines]) => (
+          <div key={category} className="mt-10">
+            <p className="text-3xl font-bold my-5">{category}</p>
+            <div className="w-full grid grid-cols-4 gap-10">
+              {machines.slice(0, 4).map((machine) => (
+                <div key={machine._id} className="flex justify-center">
+                  {/* Render ProductCard with machine data */}
+                  <ProductCard machine={machine} />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-
-        <div className="mt-10">
-          <p className="text-3xl font-bold my-5">Harvestors</p>
-          <div className="w-full grid grid-cols-4 gap-10">
-            {[1, 1, 1, 1, 1, 1, 1, 1].map(() => (
-              <div className="flex justify-center">
-                <ProductCard />
-              </div>
-            ))}
-          </div>
-        </div>
+        ))}
       </div>
 
-      <div className="text-xl font-semibold text-center cursor-pointer text-gray-400 hover:text-gray-900">
-        Load More Categories
-      </div>
+      {/* Load more categories */}
+      {!allCategoriesLoaded && (
+        <div className="text-xl font-semibold text-center cursor-pointer text-gray-400 hover:text-gray-900 mb-5" onClick={handleLoadMoreCategories}>
+          Load More Categories
+        </div>
+      )}
 
-      <div className="float-end px-10 my-10">
+      {/* Pagination */}
+      {/* <div className="float-end px-10 my-10">
         <Pagination count={10} variant="outlined" shape="rounded" />
-      </div>
+      </div> */}
 
+      {/* Footer */}
       <Footer />
     </div>
   );
+
+
 };
 
 export default Products;

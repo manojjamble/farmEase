@@ -1,25 +1,58 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Reviewscard from "../components/Reviewscard";
 import ProductInfoCard from "../components/ProductInfoCard/ProductInfoCard.jsx";
+import { useNavigate } from "react-router-dom";
 import ProductCard from "../components/ProductCard.jsx";
+import axios from "axios";
+
 const ProductDetails = () => {
+  const { id } = useParams();
+  const [machine, setMachine] = useState(null);
+
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+  useEffect(() => {
+    const fetchMachineDetails = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  
+        console.log("machine id in product details page", id);
+  
+        const response = await axios.get(`${BASE_URL}/api/machine/?machineId=${id}`);
+  
+        setMachine(response.data);
+        console.log("Machine data retrieved successfully in ProductDetails component:", response.data);
+      } catch (error) {
+        console.error("Error fetching machine details:", error);
+      }
+    };
+  
+    fetchMachineDetails();
+  }, [id]);
+  
+
   return (
     <div>
       <div className="mb-24">
         <Navbar />
       </div>
-      <ProductInfoCard />
+      {/* {machine && <ProductInfoCard machine={machine} />} */}
+       <ProductInfoCard machine={machine} />
       <div className="px-10">
         <Reviewscard />
       </div>
-      <div className="my-10 px-10 ">
-        <p className="text-3xl font-bold my-5">Tracters</p>
+      <div className="my-10 px-10">
+        <p className="text-3xl font-bold my-5">Similar Machines</p>
         <div className="w-full grid grid-cols-4 gap-10">
           {[1, 1, 1, 1].map(() => (
             <div className="flex justify-center">
-              <ProductCard />
+              {/* Render ProductCard with machine data */}
+              {/* {machine && <ProductCard machine={machine} />} */}
+           <ProductCard machine={machine} />
             </div>
           ))}
         </div>

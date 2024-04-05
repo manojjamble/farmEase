@@ -37,7 +37,7 @@ function Register() {
       console.log(response.data); // Log response for debugging
 
       navigate('/login');
-
+      
     } catch (error) { 
       console.error('Registration failed:', error.response.data);
       // Here you can handle registration errors, such as displaying an error message to the user
@@ -60,6 +60,7 @@ function Register() {
       <div className='flex justify-around mt-[64px] p-10 '>
         <div className='w-1/4 flex-col bg-blue-200 p-4 rounded-lg'>
           {/* Form */}
+
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <label htmlFor="name" className="text-md mb-[-10px] ">Name:</label>
             <TextField id="name" name='name' label="Name" variant="standard" value={formData.name} onChange={handleChange} />

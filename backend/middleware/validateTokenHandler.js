@@ -9,7 +9,7 @@ const validateToken = asyncHandler(async (req, res, next) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = decoded.user;
-        console.log(decoded); 
+        console.log('Token Authorised'); 
         next();
     } catch (error) {
         return res.status(401).json({message: 'Not authorized, token failed'});

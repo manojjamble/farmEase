@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 import Pagination from "@mui/material/Pagination";
 import Navbar from "../components/Navbar";
@@ -8,24 +8,36 @@ import axios from "axios"
 const Products = () => {
   const sortArray = ["Top Rated", "Low Rated", "for sample"];
   const [machines, setMachines] = useState([]);
+  const [machinesByCategory, setMachinesByCategory] = useState({});
   const [loading, setLoading] = useState(true);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   useEffect(() => {
     const fetchMachines = async () => {
       try {
-        // Retrieve token from localStorage
         const token = localStorage.getItem('token');
-        console.log(token)
-
-        // Include token in request headers
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
         const response = await axios.get(`${BASE_URL}/api/machine/all`);
-        
-        console.log(response.data);
+
+        console.log("response data is " , response.data);
+        const machinesData = response.data;
+        const sortedMachines = machinesData.reduce((acc, machine) => {
+          if (!acc[machine.category]) {
+            acc[machine.category] = [];
+          }
+          // Push the current machine to the corresponding category array
+          acc[machine.category].push(machine);
+          return acc;
+        }, {});
+
+        //getting  category wise sorted machine data
+        console.log("machine by categories " ,sortedMachines);
+        setMachinesByCategory(sortedMachines);
+
         setMachines(response.data);
         setLoading(false);
+
       } catch (error) {
         console.error('Error fetching machines:', error.message);
       }
@@ -33,9 +45,9 @@ const Products = () => {
 
     fetchMachines();
   }, []);
-  
- 
-  
+
+
+
 
   return (
     <div>
@@ -63,7 +75,7 @@ const Products = () => {
 
       <div className="px-10 mt-7 float-end">
         <select
-          onChange={() => {}}
+          onChange={() => { }}
           value=""
           className="w-[8rem] text-gray-800 p-3 text-sm outline-none border border-gray-300 rounded-md focus:outline-none"
         >
@@ -112,7 +124,7 @@ const Products = () => {
         <Pagination count={10} variant="outlined" shape="rounded" />
       </div>
 
-      <Footer/>
+      <Footer />
     </div>
   );
 };

@@ -11,28 +11,28 @@ const Products = () => {
   const [loading, setLoading] = useState(true);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-  useEffect(() => {
-    const fetchMachines = async () => {
-      try {
-        // Retrieve token from localStorage
-        const token = localStorage.getItem('token');
-        console.log(token)
+  // useEffect(() => {
+  //   const fetchMachines = async () => {
+  //     try {
+  //       // Retrieve token from localStorage
+  //       const token = localStorage.getItem('token');
+  //       console.log(token)
 
-        // Include token in request headers
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  //       // Include token in request headers
+  //       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-        const response = await axios.get(`${BASE_URL}/api/machine/all`);
+  //       const response = await axios.get(`${BASE_URL}/api/machine/all`);
         
-        console.log(response.data);
-        setMachines(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching machines:', error.message);
-      }
-    };
+  //       console.log(response.data);
+  //       setMachines(response.data);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error('Error fetching machines:', error.message);
+  //     }
+  //   };
 
-    fetchMachines();
-  }, []);
+  //   fetchMachines();
+  // }, []);
   
  
   

@@ -1,21 +1,32 @@
-import React from 'react';
+import React , { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
-    const handleLogout = async () => {
-        try {
-            const navigate = useNavigate();
-            
-            // Clear the token from local storage
-            localStorage.removeItem('token');
-            
-            // Navigate to the login page
-            navigate('/login');
-        }
-        catch (error) {
-            console.error(error);
-        }
+   
+    // useEffect(() => {
+    //     // Check if the user is logged in when the component mounts
+    //     const token = localStorage.getItem('token');
+    //     if (token) {
+    //         setIsLoggedIn(true);
+    //         // Assuming you have an endpoint to fetch user data based on the token
+    //         axios.get(`${BASE_URL}/api/user`, {
+    //             headers: {
+    //                 Authorization: `Bearer ${token}`
+    //             }
+    //         })
+    //         .then(response => {
+    //             setUsername(response.data.username);
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching user data:', error);
+    //         });
+    //     }
+    // }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/login');
     };
 
     return (

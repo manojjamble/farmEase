@@ -80,7 +80,7 @@ const Products = () => {
 
       <div className="p-10">
         <div className="mt-10">
-          <p className="text-3xl font-bold my-5">Tracters</p>
+          <p className="text-3xl font-bold my-5">Tractors</p>
           <div className="w-full grid grid-cols-4 gap-10">
             {[1, 1, 1, 1].map(() => (
               <div className="flex justify-center">

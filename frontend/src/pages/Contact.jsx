@@ -26,7 +26,7 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${BASE_URL}api/contact`, formData);
+      const response = await axios.post(`${BASE_URL}/api/contact`, formData);
       console.log(response.data); 
       setMessage({ text: "Message Send Successfully.", error: false });
       setFormData({
@@ -145,7 +145,7 @@ const Contact = () => {
             </button>
           </div>
           {message && (
-            <div className={`text-${message.error ? "red" : "green"}-500`}>
+            <div className={`text-${message.error ? "red" : "green"}-500 * mt-8  text-[#2f7678c3]`  }>
               {message.text}
             </div>
           )}

@@ -9,7 +9,6 @@ const machineSchema = new mongoose.Schema({
     rentalPrice: { type: Number },
     ownerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     img: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
-    condition: { type: String },
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }]
 });
 

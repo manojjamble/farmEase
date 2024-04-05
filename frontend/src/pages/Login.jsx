@@ -50,7 +50,7 @@ function Login() {
 
       {/* form------------------- */}
       <div className='flex justify-around mt-[64px] p-10 '>
-        <div className='w-1/4 flex-col bg-blue-200 p-4 rounded-lg'>
+        <div className='w-1/4 flex-col p-4 pt-40 rounded-lg'>
           {/* Form */}
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <label htmlFor="mobile" className="text-md mb-[-10px] ">Mobile Number:</label>
@@ -62,7 +62,7 @@ function Login() {
         </div>
 
         {/* Big Image */}
-        <div className='w-1/3 flex-col bg-green-600 p-4 rounded-lg '>
+        <div className='w-1/3 flex-col p-4 rounded-lg '>
           <img src="../src/assets/hero.png" alt="Big Image" className="w-full rounded-lg" />
         </div>
       </div>

@@ -7,7 +7,7 @@ const ProductCard = () => {
             <img className='w-full h-full object-cover object-top' src="https://images2.alphacoders.com/133/1338870.png" />
         </div>
         <div className='flex justify-between items-center px-5 mt-5'>
-            <p className='text-2xl font-bold'>Tracter</p>
+            <p className='text-2xl font-bold'>Tractor</p>
             <div className=' bg-slate-200'>
             <i className="ri-heart-line" style={{fontSize: '27px'}}></i>
             </div>

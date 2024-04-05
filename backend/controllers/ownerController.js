@@ -22,7 +22,7 @@ const getOwner = asyncHandler(async (req, res) => {
 //@route POST /api/owner
 //@access Public
 const createOwner = asyncHandler(async (req, res) => {
-    if(req.user.role !== 'owner'){
+    if(req.user.role !== 'farmer'){
         return res.status(401).json({message: 'Unauthorized'});
     }
     const owner = new Owner({

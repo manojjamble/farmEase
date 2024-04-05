@@ -28,7 +28,7 @@ const Navbar = () => {
             </div>
             <div className='flex items-end justify-center gap-4 w-1/3'>
                 <h1 className='hover:bg-[#b2d8b4] p-1 rounded-md'><Link to="/products">Products</Link></h1>
-                <h1 className='hover:bg-[#b2d8b4] p-1 rounded-md'><Link to="/add-tools">Add Tools</Link></h1>
+                <h1 className='hover:bg-[#b2d8b4] p-1 rounded-md'><Link to="/add_tools">Add Tools</Link></h1>
                 <h1 className='hover:bg-[#b2d8b4] p-1 rounded-md'><Link to="/about">About us</Link></h1>
                 <h1 className='hover:bg-[#b2d8b4] p-1 rounded-md'><Link to="/contact">Contact us</Link></h1>
             </div>

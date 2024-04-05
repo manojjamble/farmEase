@@ -9,6 +9,7 @@ import Contact from './pages/Contact';
 import About from './pages/About';
 import ProductDetails from './pages/Productdetails';
 import ProductRegistrationPage from './pages/ProductRegistrationPage';
+import Image from './pages/Image';
 
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
         <Route path='/products/:id' element={<ProductDetails/>} />
         <Route path='/add_tools' element={<ProductRegistrationPage/>} />
         <Route path='/about' element={<About/>} />
+        <Route path='/trial' element={<Image />} />
 
         
         {/* Add more Route components for other pages as needed */}

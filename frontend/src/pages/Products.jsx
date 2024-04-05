@@ -16,12 +16,14 @@ const Products = () => {
       try {
         // Retrieve token from localStorage
         const token = localStorage.getItem('token');
+        console.log(token)
 
         // Include token in request headers
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
         const response = await axios.get(`${BASE_URL}/api/machine/all`);
-        console.log(response.data); 
+        
+        console.log(response.data);
         setMachines(response.data);
         setLoading(false);
       } catch (error) {

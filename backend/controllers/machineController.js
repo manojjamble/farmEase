@@ -14,7 +14,11 @@ const getMachines = asyncHandler(async (req, res) => {
 //@access Private
 const getMachine = asyncHandler(async (req, res) => {
     const {machineId} = req.query;
-    const machine = await Machine.findById(machineId);
+    const machine = await Machine.findById(machineId)
+    .populate('ownerId', 'name address city state zipCode mobile')
+    .populate('img')
+    .populate('reviews', 'rating comment userId')
+    .populate('reviews.userId', 'name');
     if(machine){
         res.status(200).json({ message : "Success",machine});
     } else {

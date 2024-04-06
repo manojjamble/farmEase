@@ -14,7 +14,9 @@ const getMachines = asyncHandler(async (req, res) => {
 //@access Private
 const getMachine = asyncHandler(async (req, res) => {
     const {machineId} = req.query;
+
     const machine = await Machine.findById(machineId);
+
     if(machine){
         res.status(200).json({ message : "Success",machine});
     } else {

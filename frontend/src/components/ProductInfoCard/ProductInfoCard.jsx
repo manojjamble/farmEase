@@ -4,22 +4,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./ProductInfoCard.css";
 
-const ProductInfoCard = ({ machine }) => {
+const ProductInfoCard = ({ product }) => {
   // Placeholder data
-  const product = {
-    name: "Green Sweater",
-    vendor: "TATA",
-    location: "City, State",
-    warehouse: "A",
-    price: 100.0,
-    availability: true,
-    description: "Description/condition about status",
-    images: [
-      // Placeholder images
-      "https://images.pexels.com/photos/2933243/pexels-photo-2933243.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      "https://images.pexels.com/photos/2889440/pexels-photo-2889440.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    ],
-  };
+  const { company, availability, category  , name , description  } = product;
+  
 
   const settings = {
     dots: true, // Show navigation dots
@@ -70,28 +58,22 @@ const ProductInfoCard = ({ machine }) => {
             <h2 className="text-lg  col-span-2">{product.name}</h2>
           </div>
           <div className="label">
-            <p className="text-gray-600">Vendor:</p>
+            <p className="text-gray-600">Category:</p>
           </div>
           <div className="value">
-            <p className="col-span-2">{product.vendor}</p>
+            <p className="col-span-2">{product.category}</p>
           </div>
           <div className="label">
-            <p className="text-gray-600">Model:</p>
+            <p className="text-gray-600">Company:</p>
           </div>
           <div className="value">
-            <p className="col-span-2">{product.model}</p>
+            <p className="col-span-2">{product.company}</p>
           </div>
           <div className="label">
             <p className="text-gray-600">Location:</p>
           </div>
           <div className="value">
-            <p className="col-span-2">{product.location}</p>
-          </div>
-          <div className="label">
-            <p className="text-gray-600">Warehouse:</p>
-          </div>
-          <div className="value">
-            <p className="col-span-2">{product.warehouse}</p>
+            {/* <p className="col-span-2">{product.location}</p> */}
           </div>
         </div>
 
@@ -102,7 +84,7 @@ const ProductInfoCard = ({ machine }) => {
             <p className="text-gray-600">Price:</p>
           </div>
           <div className="value">
-            <p className="col-span-2">${product.price.toFixed(2)}</p>
+            <p className="col-span-2">${product.rentalPrice.toFixed(2)}</p>
           </div>
           <div className="label">
             <p className="text-gray-600 font-bold">Availability:</p>
@@ -136,7 +118,7 @@ const ProductInfoCard = ({ machine }) => {
             <p className="text-gray-600">Operational hours:</p>
           </div>
           <div className="value">
-            <p className="text-gray-600">{product.workingTime}</p>
+            <p className="text-gray-600">{product.availability}</p>
           </div>
         </div>
       </div>

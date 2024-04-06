@@ -3,6 +3,7 @@ const router = express.Router();
 const {getMachines, getMachine, createMachine, updateMachine, deleteMachine} = require('../controllers/machineController');
 const validateToken = require('../middleware/validateTokenHandler');
 
+
 router.use(validateToken);
 
 router.get('/all', getMachines);

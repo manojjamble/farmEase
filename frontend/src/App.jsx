@@ -7,7 +7,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Contact from './pages/Contact';
 import About from './pages/About';
-import ProductDetails from './pages/Productdetails';
+import ProductDetails from './pages/ProductDetails';
 import ProductRegistrationPage from './pages/ProductRegistrationPage';
 import Image from './pages/Image';
 import ProductInfoCard from './components/ProductInfoCard/ProductInfoCard';

@@ -10,9 +10,9 @@ const upload = multer({ storage });
 //@route GET /api/image/all
 //@access Private
 const getImgs = asyncHandler(async (req, res) => {
-    const { machineId } = req.query;
-    console.log(machineId);
-    const imgs = await Img.find({ machineId });
+    const { ImgId } = req.query;
+    console.log(ImgId);
+    const imgs = await Img.find( ImgId );
     res.status(200).json(imgs);    
 });
 

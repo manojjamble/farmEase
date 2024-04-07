@@ -5,6 +5,9 @@ import TextField from '@mui/material/TextField';
 
 
 const ProductCard = ({ machine }) => {
+  console.log(machine);
+
+
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   //  onClick={() => navigate(`/product/${machine._id}`)} in outermost div
@@ -30,7 +33,7 @@ const ProductCard = ({ machine }) => {
   return (
     <div className="w-full h-[25rem] bg-slate-100 shadow-md hover:scale-105 duration-500">
       <div className="bg-slate-200 w-full h-[13rem]">
-        <img className="w-full h-full object-cover object-top" src="https://images2.alphacoders.com/133/1338870.png" alt={machine.name} />
+        <img className="w-full h-full object-cover object-top" src={machine.img[0]} alt={machine.name} />
       </div>
       <div className="flex justify-between items-center px-5 mt-5">
         <p className="text-2xl font-bold">{machine.name}</p>

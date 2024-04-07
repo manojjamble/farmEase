@@ -29,21 +29,23 @@ const Products = () => {
         const token = localStorage.getItem('token');
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
+        //gettin machine details 
         const response = await axios.get(`${BASE_URL}/api/machine/all`);
-
-        console.log("response data is ", response.data);
+        // console.log("response data is ", response.data);
         const machinesData = response.data;
+
         const sortedMachines = machinesData.reduce((acc, machine) => {
           if (!acc[machine.category]) {
             acc[machine.category] = [];
           }
+
           // Push the current machine to the corresponding category array
           acc[machine.category].push(machine);
           return acc;
         }, {});
 
         //getting  category wise sorted machine data
-        console.log("machine by categories ", sortedMachines);
+        // console.log("machine by categories ", sortedMachines);
         setMachinesByCategory(sortedMachines);
 
         setMachines(response.data);
@@ -54,8 +56,47 @@ const Products = () => {
       }
     };
 
+    const fetchImagesForMachine = async (machine) => {
+      try {
+        const images = await Promise.all(
+          machine.img.map(async (imageId) => {
+            const imageResponse = await axios.get(`http://localhost:3000/api/image?imgId=${imageId}`);
+            console.log("Image response data " ,imageResponse.data);
+            return imageResponse.data;
+          })
+        );
+        return { ...machine, images };
+      } catch (error) {
+        console.error('Error fetching images for machine:', error);
+        return machine; // Return the machine without images in case of error
+      }
+    };
+    
+
+    // Function to fetch images for all machines
+    const fetchImagesForAllMachines = async (machines) => {
+      try {
+        const updatedMachines = await Promise.all(
+          machines.map(async (machine) => {
+            return fetchImagesForMachine(machine);
+          })
+        );
+        setMachines(updatedMachines);
+      } catch (error) {
+        console.error('Error fetching images for all machines:', error);
+      }
+    };
+    
+    
+
     fetchMachines();
+    console.log("fetchImagesForAllMachines called");
+    fetchImagesForAllMachines(machines);
+
   }, []);
+
+  console.log("Updated machines with image id" ,machines)
+
 
 
 
@@ -150,7 +191,7 @@ const Products = () => {
 
       {/* Footer */}
       <Footer />
-      
+
     </div>
   );
 

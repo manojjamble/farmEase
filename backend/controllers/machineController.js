@@ -5,7 +5,10 @@ const Machine = require('../models/machine');
 //@route GET /api/machine
 //@access Private
 const getMachines = asyncHandler(async (req, res) => {
-    const machines = await Machine.find({});
+    const machines = await Machine.find({})
+    .populate('ownerId', 'name address')
+    .populate('img');
+
     res.json(machines);
 });
 

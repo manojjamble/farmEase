@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import Reviewscard from "../components/Reviewscard";
+import Navbar from "../components/Navbar.jsx";
+import Footer from "../components/Footer.jsx";
+import Reviewscard from "../components/Reviewscard.jsx";
 import ProductInfoCard from "../components/ProductInfoCard/ProductInfoCard.jsx";
 import { useNavigate } from "react-router-dom";
 import ProductCard from "../components/ProductCard.jsx";
@@ -116,7 +116,7 @@ const ProductDetails = () => {
             <div className="flex justify-center">
               {/* Render ProductCard with machine data */}
               {/* {machine && <ProductCard machine={machine} />} */}
-              <ProductCard machine={machine} />
+              {/* <ProductCard machine={machine} /> */}
             </div>
           ))}
         </div>

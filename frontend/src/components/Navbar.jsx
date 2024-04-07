@@ -67,11 +67,13 @@ const Navbar = () => {
             </h1>
           </div>
           <div className="flex items-center justify-end w-1/3 gap-8">
-            <div className="flex align-center items-center justify-start gap-2">
+            <div className="flex align-center items-center justify-start gap-2" style={{ cursor: 'pointer' }} onClick={() => navigate("/profile")}>
               <img
                 src="../src/assets/avatar.jpg"
                 alt=""
                 className="rounded-full w-10 object-cover"
+                
+                
               />
               <h1 className="text-xl text-zinc-800 ">{username}</h1>
             </div>

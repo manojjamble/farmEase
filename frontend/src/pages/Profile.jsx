@@ -1,10 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { TextField } from '@mui/material';
+import { useLocation } from 'react-router-dom';
+import { Toaster, toast } from 'react-hot-toast';
+import {Button} from '@mui/material'
 
 
 const Profile = () => {
-    
+
     const [selectedView, setSelectedView] = useState('myTools');
 
     const user = {
@@ -26,19 +32,59 @@ const Profile = () => {
         ]
     };
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [username, setUsername] = useState('');
+    const navigate = useNavigate();
+    const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            setIsLoggedIn(true);
+            axios.get(`${BASE_URL}/api/user`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }).then((response) => {
+                setUsername(response.data.user.name);
+            }).catch((error) => {
+                console.error("Error fetching user data:", error);
+            });
+        }
+    }, []);
+
+    const [editMode, setEditMode] = useState(false);
+    const [editedUser, setEditedUser] = useState({ ...user });
+    const [editedTools, setEditedTools] = useState(user.tools.join(', ')); // Convert array to string
+
+    const handleEditProfile = () => {
+        setEditMode(!editMode);
+    };
+
+    const handleSaveProfile = () => {
+        // Perform logic to save edited profile information
+        // For example, send a request to update user data
+        console.log("Edited User:", editedUser);
+
+        // After saving, exit edit mode
+        setEditMode(false);
+    };
+
+
     return (
         <div className='w-full h-screen mt-[64px]'>
             <Navbar />
-            <div className='flex '>
 
+            <div className='flex  p-14'>
 
                 {/* Profile Section --------------*/}
-                <div className='w-1/5 h-screen justify-center items-center '>
+                {/* <div className=' w-1/5 h-screen  items-end   '>
 
-                    <div className='flex flex-col mx-3 px-1 py-10 mt-7 items-center bg-[#f0f0f0]  rounded-3xl shadow-lg shadow-zinc-600'>
+                    <div className='flex flex-col mx-3 px-1 py-10 mt-7  items-center bg-[#f0f0f0]  rounded-xl shadow-md shadow-zinc-300'>
                         <img src={user.image} alt="" className='rounded-full w-52 object-cover ' />
-                        <h1 className='text-xl mt-3'>{user.username}</h1>
-                        {/* Wrap the tools in a container with fixed height and overflow auto */}
+                        <h1 className='text-xl mt-3'>{username}</h1>
+                        <h1 className='text-xl mt-3'>Tools Own: {user.tools.length}</h1>
+                        <h1 className='text-xl mt-3'>Ratings : 3.5 </h1>
                         <div className=' m-2 overflow-auto mt-8 flex flex-wrap gap-2'>
                             {user.tools.map((tool, index) => (
                                 <h1 className='text-md bg-[#dfd9e2] p-2 rounded-xl' key={index}>{tool}</h1>
@@ -48,11 +94,77 @@ const Profile = () => {
                         <button className="bg-[#2a7f62] hover:bg-[#3d9678] text-white font-bold py-2 px-4 mt-8 rounded">Edit Profile</button>
 
                     </div>
+                </div> */}
+
+                <div className='w-1/5 h-screen items-end'>
+                    <div className='flex flex-col mx-3 px-1 py-10 mt-7 items-center bg-[#f0f0f0] rounded-xl shadow-md shadow-zinc-300'>
+                        <img src={user.avatar} alt="" className='rounded-full w-52 object-cover' />
+                        {editMode ? (
+                            <TextField
+                                value={editedUser.name}
+                                onChange={(e) => setEditedUser({ ...editedUser, name: e.target.value })}
+                                label="Name"
+                                variant='standard'
+                                className="mt-3"
+                            />
+                        ) : (
+                            <h1 className='text-xl mt-3'>{user.name}</h1>
+                        )}
+                        <div className='m-2 overflow-auto mt-8 flex flex-wrap gap-2'>
+                            {editMode ? (
+                                <TextField
+                                    value={editedTools}
+                                    onChange={(e) => setEditedTools(e.target.value)}
+                                    label="Tools"
+                                    variant='standard'
+                                    className="text-md bg-[#dfd9e2] p-2 rounded-xl"
+                                />
+                            ) : (
+                                user.tools.map((tool, index) => (
+                                    <h1 className='text-md bg-[#dfd9e2] p-2 rounded-xl' key={index}>{tool}</h1>
+                                ))
+                            )}
+                        </div>
+                        <div className='mt-3'>
+                            {editMode ? (
+                                <TextField
+                                    value={editedUser.mobile}
+                                    onChange={(e) => setEditedUser({ ...editedUser, mobile: e.target.value })}
+                                    label="Mobile"
+                                    variant='standard'
+                                    className="text-xl"
+                                />
+                            ) : (
+                                <p className='text-xl '>{user.mobile}</p>
+                            )}
+                        </div>
+
+                        {editMode ? (
+                            <Button
+                                variant="contained"
+                                color="success"
+                                className="mt-8"    
+                                onClick={handleSaveProfile}
+                            >
+                                Save Profile
+                            </Button>
+                        ) : (
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                className="mt-8"
+                                onClick={handleEditProfile}
+                            >
+                                Edit Profile
+                            </Button>
+                        )}
+                    </div>
                 </div>
 
 
+
                 {/* Tools Section --------------------------*/}
-                <div className='w-4/5 h-screen bg-white rounded-3xl mt-5 p-3'>
+                <div className='w-4/5 h-screen bg-white rounded-3xl mt-[-104px] p-3'>
                     {/* Toolbar section */}
                     <div className="flex mt-4 p-8 border-b border-zinc-600 pb-2 ">
                         <button className={`text-[#2a7f62]  border-r border-zinc-600 font-bold py-2 px-4   ${selectedView === 'myTools' ? 'text-[#193a2f]' : ''}`} onClick={() => setSelectedView('myTools')}>My Tools</button>
@@ -72,10 +184,10 @@ const Profile = () => {
                         ))}
                     </div>
                 </div>
-                
+
             </div>
-                {/* Footer------------------ */}
-                <Footer/>
+            {/* Footer------------------ */}
+            <Footer />
 
         </div>
     );

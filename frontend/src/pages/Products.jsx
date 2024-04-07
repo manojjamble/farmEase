@@ -35,11 +35,6 @@ const Products = () => {
         const response = await axios.get(`${BASE_URL}/api/machine/all`);
         const machinesData = response.data;
 
-        // machinesData.map((machine) => {
-        //   // console.log("machine id is " ,machine._id);
-        //   fetchImages(machine._id);
-        // })
-
 
         const sortedMachines = machinesData.reduce((acc, machine) => {
           if (!acc[machine.category]) {
@@ -64,6 +59,7 @@ const Products = () => {
     fetchMachines();
   }, []);
 
+  
   return (
     <div>
       <div className="mb-24">

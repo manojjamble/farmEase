@@ -41,6 +41,8 @@ const ProductCard = ({ machine }) => {
               ''
             )
           )}`}
+          className="w-full h-full object-cover object-top" 
+          object-fit="cover"
           alt={machine.img[0].filename}
         />
       )}

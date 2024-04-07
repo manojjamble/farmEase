@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Modal from 'react-modal'; // Corrected import statement
+import TextField from '@mui/material/TextField';
+
 
 const ProductCard = ({ machine }) => {
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   //  onClick={() => navigate(`/product/${machine._id}`)} in outermost div
-
+  console.log(machine);
   const [modal, setModal] = useState(false);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -62,10 +64,21 @@ const ProductCard = ({ machine }) => {
       >
         <h2 className='text-2xl bold text-zinc-900 items-center justify-center'>Confirm Booking</h2><br></br>
         <p className='text-lg text-zinc-900 items-center justify-center'>Are you sure you want to book <b>{machine.name}</b>?</p><br></br>
-        <p>Price: ${machine.price}</p>
-        <p>Duration: {machine.duration} hours</p>
-        <p>Start Date: {new Date(machine.startDate).toLocaleDateString()}</p>
-        <p>End Date: {new Date(machine.endDate).toLocaleDateString()}</p>
+        <p>Price: ${machine.rentalPrice}</p>
+        {/* <Calendar
+          onChange={date => setSelectedDate(date)}
+          value={selectedDate}
+        /> */}
+        <div className='flex mt-1 gap-2'>
+        <p className='mt-1'>Date:</p>
+        <TextField
+          id="standard-search"
+          type="date"
+          variant="standard"
+          placeholder="Enter Date (DD)"
+        />
+        </div>
+        <p>Availability: {(machine.availability)}</p>
         <br></br>
         <div className='flex justify-center gap-5'>
           <button onClick={handleConfirmBooking} className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-2xl'>Confirm</button>

@@ -61,47 +61,8 @@ const Products = () => {
       }
     };
 
-    const fetchImages = async (machineId) => {
-      try {
-        const token = localStorage.getItem('token');
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const response = await axios.get(`http://localhost:3000/api/image/all?machineId=${machineId}`);
-        const imgs = response.data;
-        console.log("image data" , imgs);
-        if (Array.isArray(imgs)) {
-          // Find the index of the machine with the specified ID in machinesData
-          const machineIndex = machinesData.findIndex(machine => machine._id === machineId);
-          if (machineIndex !== -1) {
-            // Append the fetched images to the machine's images array
-            machinesData[machineIndex].images = imgs;
-            // Update the state with the modified machinesData
-            setMachines(machinesData);
-          } else {
-            console.error('Machine not found:', machineId);
-          }
-        } else {
-          console.error('Invalid response format:', response.data);
-        }
-      } catch (error) {
-        console.error('Error fetching images:', error);
-      }
-    };
-    
     fetchMachines();
-    
-    // assignImagesToMachines(machines);
-
-
-
-
   }, []);
-
-
-  // console.log("Updated machines with image id", machines)
-
-
-
-
 
   return (
     <div>

@@ -23,8 +23,8 @@ const Navbar = () => {
           },
         })
         .then((response) => {
-          console.log(response.data);
-          setUsername(response.data.user);
+          console.log("user name" , response.data.user.name);
+          setUsername(response.data.user.name);
         })
         .catch((error) => {
           console.error("Error fetching user data:", error);
@@ -73,7 +73,7 @@ const Navbar = () => {
                 alt=""
                 className="rounded-full w-10 object-cover"
               />
-              <h1 className="text-xl text-zinc-800 ">Username</h1>
+              <h1 className="text-xl text-zinc-800 ">{username}</h1>
             </div>
             <button
               onClick={handleLogout}

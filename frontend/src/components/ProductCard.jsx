@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 
 
 const ProductCard = ({ machine }) => {
-  // console.log(machine);
+  console.log(machine);
 
 
   const navigate = useNavigate();
@@ -33,18 +33,18 @@ const ProductCard = ({ machine }) => {
   return (
     <div className="w-full h-[25rem] bg-slate-100 shadow-md hover:scale-105 duration-500">
       <div className="bg-slate-200 w-full h-[13rem]">
-      {/* {machine.images.length > 0 && (
+      {machine.img.length > 0 && (
         <img
-          src={`data:${machine.images[0].contentType};base64,${btoa(
-            new Uint8Array(machine.images[0].data.data).reduce(
+          src={`data:${machine.img[0].contentType};base64,${btoa(
+            new Uint8Array(machine.img[0].data.data).reduce(
               (data, byte) => data + String.fromCharCode(byte),
               ''
             )
           )}`}
-          alt={machine.images[0].filename}
+          alt={machine.img[0].filename}
         />
-      )} */}
-        <img className="w-full h-full object-cover object-top" src={machine.img[0]} alt={machine.name} />
+      )}
+        {/* <img className="w-full h-full object-cover object-top" src={machine.img[0]} alt={machine.name} /> */}
       </div>
       <div className="flex justify-between items-center px-5 mt-5">
         <p className="text-2xl font-bold">{machine.name}</p>

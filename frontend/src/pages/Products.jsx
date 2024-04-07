@@ -4,6 +4,7 @@ import Pagination from "@mui/material/Pagination";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import axios from "axios"
+import TextField from '@mui/material/TextField';
 
 const Products = () => {
   const sortArray = ["Top Rated", "Low Rated", "for sample"];
@@ -57,64 +58,77 @@ const Products = () => {
   }, []);
 
 
+
+
   return (
     <div>
       <div className="mb-24">
         <Navbar />
       </div>
 
+
       {/* Search bar */}
-      <div className="flex justify-between bg-slate-50 px-10">
-        {/* Location search input , yet to add */}
-        <input
-          type="text"
-          placeholder="search by location"
-          className="p-2 w-[25rem] border border-gray-500"
+      <div className="flex flex-col lg:flex-row sm:flex-col md:flex-col  items-center gap-10  justify-evenly bg-slate-50 px-10">
+
+        {/* Location search input */}
+        <TextField
+          id="standard-search"
+          label="Search Location"
+          type="search"
+          variant="standard"
+          placeholder="Search by location"
+          className=" md:w-[15rem] mr-3 md:mb-0 md:mr-3"
         />
-        {/* Tool search input   ,yet to add*/}
-        <div className="space-x-5 flex">
-          <input
-            type="text"
-            placeholder="search by Tools"
-            className="p-2 w-[50rem] border border-gray-500"
+
+        {/* Tool search input and search button */}
+        <div className="flex lg:flex-row  sm:flex-col md:flex-col">
+          <TextField
+            id="standard-search"
+            label="Search Product"
+            type="search"
+            variant="standard"
+            placeholder="Search by Product"
+            className=" md:w-[35rem] mr-3 md:mb-0 md:mr-3"
           />
-          <button className="p-2 bg-green-900 text-white w-[10rem]">
-            search
+          <button className="p-2 mt-2 bg-green-900 rounded-3xl text-white w-[5rem] md:w-[10rem] sm-w-[5rem]">
+            Search
           </button>
+        </div>
+
+        {/* Sort dropdown */}
+        <div className="px-10  float-end md:float-none md:w-auto md:text-right">
+          <select
+            // yet to add sort feature
+            onChange={() => { }}
+            value=""
+            className="w-[8rem] text-gray-800 p-3 text-sm outline-none border border-gray-300 rounded-md focus:outline-none md:w-full"
+          >
+            {sortArray.map((item) => (
+              <option
+                style={{ padding: "0.5rem" }}
+                className="py-2 px-4 text-sm text-gray-800 bg-gray-200 hover:bg-gray-300"
+                key={item}
+                value={item}
+              >
+                {item}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
-      {/* Sort dropdown */}
-      <div className="px-10 mt-7 float-end">
-        <select
-      // yet to add sort feature
-          onChange={() => { }}
-          value=""
-          className="w-[8rem] text-gray-800 p-3 text-sm outline-none border border-gray-300 rounded-md focus:outline-none"
-        >
-          {sortArray.map((item) => (
-            <option
-              style={{ padding: "0.5rem" }}
-              className="py-2 px-4 text-sm text-gray-800 bg-gray-200 hover:bg-gray-300"
-              key={item}
-              value={item}
-            >
-              {item}
-            </option>
-          ))}
-        </select>
-      </div>
 
       {/* Category-wise machines */}
       <div className="p-10">
         {Object.entries(machinesByCategory).slice(0, displayedCategories).map(([category, machines]) => (
           <div key={category} className="mt-10">
             <p className="text-3xl font-bold my-5">{category}</p>
-            <div className="w-full grid grid-cols-4 gap-10">
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
               {machines.slice(0, 4).map((machine) => (
                 <div key={machine._id} className="flex justify-center">
                   {/* Render ProductCard with machine data */}
                   <ProductCard machine={machine} />
+
                 </div>
               ))}
             </div>
@@ -124,7 +138,7 @@ const Products = () => {
 
       {/* Load more categories */}
       {!allCategoriesLoaded && (
-        <div className="text-xl font-semibold text-center cursor-pointer text-gray-400 hover:text-gray-900 mb-5" onClick={handleLoadMoreCategories}>
+        <div className="text-xl font-semibold text-center cursor-pointer text-gray-400 hover:text-gray-900 mb-5 md:mb-0" onClick={handleLoadMoreCategories}>
           Load More Categories
         </div>
       )}
@@ -136,6 +150,7 @@ const Products = () => {
 
       {/* Footer */}
       <Footer />
+      
     </div>
   );
 

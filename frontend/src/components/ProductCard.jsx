@@ -1,15 +1,32 @@
-import React from 'react';
-import { Link  , useNavigate} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import Modal from 'react-modal'; // Corrected import statement
 
 const ProductCard = ({ machine }) => {
-  const  navigate = useNavigate();
+  const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  
+  //  onClick={() => navigate(`/product/${machine._id}`)} in outermost div
 
-  console.log(machine);
-  
+  const [modal, setModal] = useState(false);
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const handleConfirmBooking = () => {
+    // Perform booking action here
+    console.log("Booking confirmed!");
+    closeModal();
+  };
+
   return (
-    <div onClick={() => navigate(`/product/${machine._id}`)} className="w-full h-[25rem] bg-slate-100 shadow-md hover:scale-105 duration-500">
+    <div className="w-full h-[25rem] bg-slate-100 shadow-md hover:scale-105 duration-500">
       <div className="bg-slate-200 w-full h-[13rem]">
         <img className="w-full h-full object-cover object-top" src="https://images2.alphacoders.com/133/1338870.png" alt={machine.name} />
       </div>
@@ -23,9 +40,38 @@ const ProductCard = ({ machine }) => {
         {machine.description}
       </p>
       {/* <p>{machine._id}</p> */}
-      <button className="bg-blue-200 mt-5 p-2 mr-2 float-end hover:bg-blue-400">
+      <button className="bg-blue-200 mt-5 p-2 mr-2 float-end hover:bg-blue-400" onClick={openModal}>
         Book Now
       </button>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          },
+          content: {
+            color: 'black',
+            width: '30%',
+            height: '40%',
+            margin: 'auto',
+            borderRadius: '10px',
+            padding: '20px',
+          },
+        }}
+      >
+        <h2 className='text-2xl bold text-zinc-900 items-center justify-center'>Confirm Booking</h2><br></br>
+        <p className='text-lg text-zinc-900 items-center justify-center'>Are you sure you want to book <b>{machine.name}</b>?</p><br></br>
+        <p>Price: ${machine.price}</p>
+        <p>Duration: {machine.duration} hours</p>
+        <p>Start Date: {new Date(machine.startDate).toLocaleDateString()}</p>
+        <p>End Date: {new Date(machine.endDate).toLocaleDateString()}</p>
+        <br></br>
+        <div className='flex justify-center gap-5'>
+          <button onClick={handleConfirmBooking} className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-2xl'>Confirm</button>
+          <button onClick={closeModal} className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-2xl'>Cancel</button>
+        </div>
+      </Modal>
     </div>
   );
 }

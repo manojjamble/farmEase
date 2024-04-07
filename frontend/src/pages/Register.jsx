@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom';
 import { TextField } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Toaster, toast } from 'react-hot-toast';
 
 function Register() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
+  const [isRegistered, setIsRegistered] = useState(false);
+
   const [formData, setFormData] = useState({
     name: '',
     mobile: '',
@@ -35,11 +38,13 @@ function Register() {
       console.log(formData);
       const response = await axios.post(`${BASE_URL}/api/user/`, formData);
       console.log(response.data); // Log response for debugging
+      toast.success('Successfully Registered!');
 
-      navigate('/login');
-      
-    } catch (error) { 
+      setIsRegistered(true);
+
+    } catch (error) {
       console.error('Registration failed:', error.response.data);
+      toast.error('Registration failed!!');
       // Here you can handle registration errors, such as displaying an error message to the user
     }
   };
@@ -62,6 +67,10 @@ function Register() {
           {/* Form */}
 
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+            <Toaster
+              position="top-center"
+              reverseOrder={false}
+            />
             <label htmlFor="name" className="text-md mb-[-10px] ">Name:</label>
             <TextField id="name" name='name' label="Name" variant="standard" value={formData.name} onChange={handleChange} />
             <label htmlFor="mobile" className="text-md mb-[-10px] ">Mobile Number:</label>
@@ -80,12 +89,17 @@ function Register() {
             <TextField id="zipCode" name='zipCode' label="Zip Code" variant="standard" value={formData.zipCode} onChange={handleChange} />
             <button type="submit" className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600">Register</button>
           </form>
+
         </div>
 
         {/* Big Image */}
         <div className='w-1/3 flex-col p-4 rounded-lg '>
-          <img src="../src/assets/hero.png" alt="Big Image" className="w-full rounded-lg" />  
+          <img src="../src/assets/hero.png" alt="Big Image" className="w-full rounded-lg" />
+          { isRegistered ? <button onClick={() => navigate('/login')} className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600">Login</button> :
+          null
+          }
         </div>
+
       </div>
     </div>
   );

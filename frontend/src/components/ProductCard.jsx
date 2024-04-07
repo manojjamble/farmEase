@@ -8,7 +8,7 @@ const ProductCard = ({ machine }) => {
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   //  onClick={() => navigate(`/product/${machine._id}`)} in outermost div
-  console.log(machine);
+  // console.log(machine);
   const [modal, setModal] = useState(false);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);

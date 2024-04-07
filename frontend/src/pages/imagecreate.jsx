@@ -18,6 +18,7 @@ const handleUpload = async () => {
     });
 
     formData.append('machineId', '66103b64dc73356869ae5b1c');
+
     const token = localStorage.getItem('token');
     console.log('token:', token);
     // add token to headers

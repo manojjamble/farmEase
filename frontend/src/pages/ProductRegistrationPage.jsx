@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import axios from "axios";
+import { Toaster, toast } from 'react-hot-toast';
 
 function ProductRegistrationPage() {
+
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [machineDetails, setMachineDetails] = useState({
     name: "",
@@ -20,28 +22,20 @@ function ProductRegistrationPage() {
       [name]: value,
     }));
   };
-  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Log machineDetails to check if it contains the expected data
-      console.log(machineDetails.name);
-      console.log(machineDetails.company);
-      console.log(machineDetails.description);
-      console.log(machineDetails.rentalPrice);
-      console.log(machineDetails.availability);
-      console.log(machineDetails.category);
 
-      const formData1 = { ...machineDetails};
-  
+      const formData1 = { ...machineDetails };
+
       const token = localStorage.getItem('token');
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      console.log(token);
       console.log(formData1);
       const machineDetailsResponse = await axios.post(`${BASE_URL}/api/machine`, formData1);
-      console.log(machineDetailsResponse);
-  
+      console.log(machineDetailsResponse.data.machine);
+
       setMachineDetails({
         name: "",
         company: "",
@@ -50,15 +44,49 @@ function ProductRegistrationPage() {
         availability: "",
         category: ""
       });
+
+      // File uploading code heretry {
+        try{
+        const formData = new FormData();
+        selectedFiles.forEach((file) => {
+          formData.append('avatar', file);
+        });
+  
+        formData.append('machineId', machineDetailsResponse.data.machine._id);
+        const response = await axios.post('http://localhost:3000/api/image', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        console.log('Images uploaded successfully:', response.data);
+        setSelectedFiles([]);
+        toast.success('Product created successfully!');
+  
+      } catch (error) {
+        toast.error('Error Uploading Images');
+      }
+
     } catch (error) {
       console.error("Error creating product:", error);
+      toast.error('Error creating product');
     }
   };
-  
+
+  const [selectedFiles, setSelectedFiles] = useState([]);
+
+  const handleFileChange = (event) => {
+    setSelectedFiles(Array.from(event.target.files));
+  };
+
+
 
   return (
     <div className="">
       <Navbar />
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
       <div className="bg-green-50 w-full mt-10 py-4 min-h-screen">
         <div className="container mx-auto flex w-full">
           <div className="right w-[60%] mx-auto mt-14 px-6  py-8 bg-green-100 shadow-md rounded-lg">
@@ -67,6 +95,7 @@ function ProductRegistrationPage() {
             </h1>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="p-4">
+                {/* Name */}
                 <div className="mb-4">
                   <label
                     className="block text-gray-700 text-sm font-bold mb-2"
@@ -83,6 +112,7 @@ function ProductRegistrationPage() {
                     required
                   />
                 </div>
+                {/* Company */}
                 <div className="mb-4">
                   <label
                     className="block text-gray-700 text-sm font-bold mb-2"
@@ -99,6 +129,7 @@ function ProductRegistrationPage() {
                     required
                   />
                 </div>
+                {/* Description */}
                 <div className="mb-4">
                   <label
                     className="block text-gray-700 text-sm font-bold mb-2"
@@ -113,6 +144,7 @@ function ProductRegistrationPage() {
                     onChange={handleChange}
                   />
                 </div>
+                {/* Rental Price */}
                 <div className="mb-4">
                   <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="rentalPrice">
                     Rental Price:
@@ -125,6 +157,7 @@ function ProductRegistrationPage() {
                     onChange={handleChange}
                   />
                 </div>
+                {/* Category */}
                 <div className="mb-4">
                   <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="category">
                     Category:
@@ -138,6 +171,7 @@ function ProductRegistrationPage() {
                     placeholder="tractor / harvestor"
                   />
                 </div>
+                {/* Availability */}
                 <div className="mb-4">
                   <label
                     className="block text-gray-700 text-sm font-bold mb-2"
@@ -154,6 +188,20 @@ function ProductRegistrationPage() {
                     placeholder="9:00am - 5:00pm"
                   />
                 </div>
+
+                {/* Images */}
+                <div className="mb-4">
+                  <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="images"
+                  >
+                    Upload Images:
+                  </label>
+                  <input type="file" onChange={handleFileChange} multiple className="border border-gray-300 rounded-md px-4 py-2 w-full" />
+                  {/* <button onClick={handleUpload} className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Upload Images</button> */}
+                </div>
+
+
               </div>
               <div className="flex flex-row-reverse justify-between">
                 <button

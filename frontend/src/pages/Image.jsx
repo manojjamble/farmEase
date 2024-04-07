@@ -11,7 +11,7 @@ const ImageGallery = () => {
 
   const fetchImages = async () => {
     try {
-      const machineId = '66103b64dc73356869ae5b1c';
+      const machineId = '6612a3180befcf76a03dda13';
       const token = localStorage.getItem('token');
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       const response = await axios.get(`http://localhost:3000/api/image/all?machineId=${machineId}`);

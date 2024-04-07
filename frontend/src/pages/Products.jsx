@@ -5,12 +5,14 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import axios from "axios"
 import TextField from '@mui/material/TextField';
+import {toast , Toaster} from 'react-hot-toast';
 
 const Products = () => {
   const sortArray = ["Top Rated", "Low Rated", "for sample"];
   const [machines, setMachines] = useState([]);
   const [machinesByCategory, setMachinesByCategory] = useState({});
   const [loading, setLoading] = useState(true);
+  const [images , setImages] = useState([]);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 
@@ -18,84 +20,84 @@ const Products = () => {
   const [allCategoriesLoaded, setAllCategoriesLoaded] = useState(false);
 
   const handleLoadMoreCategories = () => {
-    // Display all available categories
     setDisplayedCategories(displayedCategories + 4);
-    // setAllCategoriesLoaded(true);
   };
 
+
   useEffect(() => {
+
     const fetchMachines = async () => {
       try {
         const token = localStorage.getItem('token');
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-        //gettin machine details 
+        // Get machine details 
         const response = await axios.get(`${BASE_URL}/api/machine/all`);
-        // console.log("response data is ", response.data);
         const machinesData = response.data;
+
+        // machinesData.map((machine) => {
+        //   // console.log("machine id is " ,machine._id);
+        //   fetchImages(machine._id);
+        // })
+
 
         const sortedMachines = machinesData.reduce((acc, machine) => {
           if (!acc[machine.category]) {
             acc[machine.category] = [];
           }
 
-          // Push the current machine to the corresponding category array
           acc[machine.category].push(machine);
           return acc;
         }, {});
 
-        //getting  category wise sorted machine data
-        // console.log("machine by categories ", sortedMachines);
         setMachinesByCategory(sortedMachines);
-
-        setMachines(response.data);
+        setMachines(machinesData);
+        // console.log("Machines data:", machinesData, "Sorted machines:", sortedMachines);
         setLoading(false);
 
       } catch (error) {
         console.error('Error fetching machines:', error.message);
+        toast.error("Error fetching machines:");
       }
     };
 
-    const fetchImagesForMachine = async (machine) => {
+    const fetchImages = async (machineId) => {
       try {
-        const images = await Promise.all(
-          machine.img.map(async (imageId) => {
-            const imageResponse = await axios.get(`http://localhost:3000/api/image?imgId=${imageId}`);
-            console.log("Image response data " ,imageResponse.data);
-            return imageResponse.data;
-          })
-        );
-        return { ...machine, images };
+        const token = localStorage.getItem('token');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        const response = await axios.get(`http://localhost:3000/api/image/all?machineId=${machineId}`);
+        const imgs = response.data;
+        console.log("image data" , imgs);
+        if (Array.isArray(imgs)) {
+          // Find the index of the machine with the specified ID in machinesData
+          const machineIndex = machinesData.findIndex(machine => machine._id === machineId);
+          if (machineIndex !== -1) {
+            // Append the fetched images to the machine's images array
+            machinesData[machineIndex].images = imgs;
+            // Update the state with the modified machinesData
+            setMachines(machinesData);
+          } else {
+            console.error('Machine not found:', machineId);
+          }
+        } else {
+          console.error('Invalid response format:', response.data);
+        }
       } catch (error) {
-        console.error('Error fetching images for machine:', error);
-        return machine; // Return the machine without images in case of error
+        console.error('Error fetching images:', error);
       }
     };
     
-
-    // Function to fetch images for all machines
-    const fetchImagesForAllMachines = async (machines) => {
-      try {
-        const updatedMachines = await Promise.all(
-          machines.map(async (machine) => {
-            return fetchImagesForMachine(machine);
-          })
-        );
-        setMachines(updatedMachines);
-      } catch (error) {
-        console.error('Error fetching images for all machines:', error);
-      }
-    };
-    
-    
-
     fetchMachines();
-    console.log("fetchImagesForAllMachines called");
-    fetchImagesForAllMachines(machines);
+    
+    // assignImagesToMachines(machines);
+
+
+
 
   }, []);
 
-  console.log("Updated machines with image id" ,machines)
+
+  // console.log("Updated machines with image id", machines)
 
 
 
@@ -107,7 +109,7 @@ const Products = () => {
         <Navbar />
       </div>
 
-
+      <Toaster position="top-center" reverseOrder={false} />
       {/* Search bar */}
       <div className="flex flex-col lg:flex-row sm:flex-col md:flex-col  items-center gap-10  justify-evenly bg-slate-50 px-10">
 

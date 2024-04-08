@@ -142,13 +142,13 @@ const Products = () => {
           <div key={category} className="mt-10">
             {selectedCategory === category && (
               <div className=" flex justify-between">
-                <p className="text-3xl font-bold my-5">{category}</p>
-                <button className="text-xl font-semibold text-gray-400 hover:text-green-900 mb-5 md:mb-0" onClick={() => setSelectedCategory(null)}>Close</button>
+                <p className="text-3xl text-green-700 font-bold my-5 relative ">{category}</p>
+                <button className="text-xl font-semibold text-gray-400 hover:text-green-900 mb-5 md:mb-0 " onClick={() => setSelectedCategory(null)}>Close</button>
               </div>
             )}
             {!selectedCategory && (
               <div className=" flex justify-between">
-                <p className="text-3xl font-bold my-5">{category}</p>
+                <p className="text-3xl text-green-800 font-bold my-5">{category}</p>
                 <button className="text-xl font-semibold text-gray-400 hover:text-green-900 mb-5 md:mb-0" onClick={() => setSelectedCategory(category)}>View all</button>
               </div>
             )}

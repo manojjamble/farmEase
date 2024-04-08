@@ -5,17 +5,18 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import axios from "axios"
 import TextField from '@mui/material/TextField';
-import {toast , Toaster} from 'react-hot-toast';
+import { toast, Toaster } from 'react-hot-toast';
 
 const Products = () => {
   const sortArray = ["Top Rated", "Low Rated", "for sample"];
   const [machines, setMachines] = useState([]);
   const [machinesByCategory, setMachinesByCategory] = useState({});
   const [loading, setLoading] = useState(true);
-  const [images , setImages] = useState([]);
+  const [images, setImages] = useState([]);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const [displayedCategories, setDisplayedCategories] = useState(4); // Number of categories to display initially
   const [allCategoriesLoaded, setAllCategoriesLoaded] = useState(false);
 
@@ -23,6 +24,18 @@ const Products = () => {
     setDisplayedCategories(displayedCategories + 4);
   };
 
+  const handleSearchQueryChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSearch = () => {
+  searchQuery.toLowerCase();
+  const selectedCategory = searchQuery.charAt(0).toUpperCase() + searchQuery.slice(1);
+  console.log("Search query:", searchQuery );
+
+    // setDisplayedCategories(filteredCategories);
+    setSelectedCategory(selectedCategory);
+  };
 
   useEffect(() => {
 
@@ -59,7 +72,7 @@ const Products = () => {
     fetchMachines();
   }, []);
 
-  
+
   return (
     <div>
       <div className="mb-24">
@@ -87,10 +100,15 @@ const Products = () => {
             label="Search Product"
             type="search"
             variant="standard"
-            placeholder="Search by Product"
-            className=" md:w-[35rem] mr-3 md:mb-0 md:mr-3"
+            placeholder="Search by Category"
+            className="md:w-[35rem] mr-6 md:mb-0 md:mr-6"
+            value={searchQuery}
+            onChange={handleSearchQueryChange}
           />
-          <button className="p-2 mt-2 bg-green-900 rounded-3xl text-white w-[5rem] md:w-[10rem] sm-w-[5rem]">
+          <button
+            className="p-2 mt-2 ml-4 bg-green-900 rounded-3xl text-white w-[5rem] md:w-[10rem] sm-w-[5rem]"
+            onClick={handleSearch}
+          >
             Search
           </button>
         </div>
@@ -122,15 +140,27 @@ const Products = () => {
       <div className="p-10">
         {Object.entries(machinesByCategory).slice(0, displayedCategories).map(([category, machines]) => (
           <div key={category} className="mt-10">
-            <p className="text-3xl font-bold my-5">{category}</p>
+            {selectedCategory === category && (
+              <div className=" flex justify-between">
+                <p className="text-3xl font-bold my-5">{category}</p>
+                <button className="text-xl font-semibold text-gray-400 hover:text-green-900 mb-5 md:mb-0" onClick={() => setSelectedCategory(null)}>Close</button>
+              </div>
+            )}
+            {!selectedCategory && (
+              <div className=" flex justify-between">
+                <p className="text-3xl font-bold my-5">{category}</p>
+                <button className="text-xl font-semibold text-gray-400 hover:text-green-900 mb-5 md:mb-0" onClick={() => setSelectedCategory(category)}>View all</button>
+              </div>
+            )}
             <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
-              {machines.slice(0, 4).map((machine) => (
-                <div key={machine._id} className="flex justify-center">
-                  {/* Render ProductCard with machine data */}
-                  <ProductCard machine={machine} />
-
-                </div>
-              ))}
+              {machines
+                .filter(machine => !selectedCategory || selectedCategory === category)
+                .map((machine) => (
+                  <div key={machine._id} className="flex justify-center">
+                    {/* Render ProductCard with machine data */}
+                    <ProductCard machine={machine} />
+                  </div>
+                ))}
             </div>
           </div>
         ))}

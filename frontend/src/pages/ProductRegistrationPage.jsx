@@ -17,9 +17,10 @@ function ProductRegistrationPage() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    const capitalizedValue = value.charAt(0).toUpperCase() + value.slice(1);
     setMachineDetails((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: capitalizedValue,
     }));
   };
 

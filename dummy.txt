@@ -1,0 +1,65 @@
+ <div>
+      <h2 className="text-3xl font-bold mb-4">Reviews</h2>
+      {/* Render reviews */}
+      <div className="mb-4">
+        {reviews.map((review, index) => (
+          <div key={index} className="border p-4 rounded mb-2">
+            <p className="text-lg font-semibold">{review.name}</p>
+            <p className="text-gray-600">{review.comment}</p>
+          </div>
+        ))}
+      </div>
+      {/* Render review form */}
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label htmlFor="name" className="block text-sm font-semibold">Name:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border rounded"
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="email" className="block text-sm font-semibold">Email:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border rounded"
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="rating" className="block text-sm font-semibold">Rating:</label>
+          <input
+            type="number"
+            id="rating"
+            name="rating"
+            value={formData.rating}
+            onChange={handleChange}
+            min="1"
+            max="5"
+            required
+            className="w-full p-2 border rounded"
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="comment" className="block text-sm font-semibold">Comment:</label>
+          <textarea
+            id="comment"
+            name="comment"
+            value={formData.comment}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border rounded"
+          ></textarea>
+        </div>
+        <button type="submit" className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit Review</button>
+      </form>
+    </div>

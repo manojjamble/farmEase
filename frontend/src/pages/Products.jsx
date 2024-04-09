@@ -31,7 +31,7 @@ const Products = () => {
   const handleSearch = () => {
   searchQuery.toLowerCase();
   const selectedCategory = searchQuery.charAt(0).toUpperCase() + searchQuery.slice(1);
-  console.log("Search query:", searchQuery );
+  // console.log("Search query:", searchQuery );
 
     // setDisplayedCategories(filteredCategories);
     setSelectedCategory(selectedCategory);

@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 
 
 const ProductCard = ({ machine }) => {
-  console.log(machine);
+  // console.log(machine);
 
 
   const navigate = useNavigate();
@@ -32,31 +32,31 @@ const ProductCard = ({ machine }) => {
 
   return (
     <div className="w-full h-[25rem] bg-slate-100 shadow-md hover:scale-105 duration-500">
-      <div className="bg-slate-200 w-full h-[13rem]">
-      {machine.img.length > 0 && (
-        <img
-          src={`data:${machine.img[0].contentType};base64,${btoa(
-            new Uint8Array(machine.img[0].data.data).reduce(
-              (data, byte) => data + String.fromCharCode(byte),
-              ''
-            )
-          )}`}
-          className="w-full h-full object-cover object-top" 
-          object-fit="cover"
-          alt={machine.img[0].filename}
-        />
-      )}
-        {/* <img className="w-full h-full object-cover object-top" src={machine.img[0]} alt={machine.name} /> */}
-      </div>
+      <Link to={`/products/${machine._id}`}>
+        <div className="bg-slate-200 w-full h-[13rem] cursor-pointer">
+          {machine.img.length > 0 && (
+            <img
+              src={`data:${machine.img[0].contentType};base64,${btoa(
+                new Uint8Array(machine.img[0].data.data).reduce(
+                  (data, byte) => data + String.fromCharCode(byte),
+                  ''
+                )
+              )}`}
+              className="w-full h-full object-cover object-top"
+              object-fit="cover"
+              alt={machine.img[0].filename}
+            />
+          )}
+          {/* <img className="w-full h-full object-cover object-top" src={machine.img[0]} alt={machine.name} /> */}
+        </div>
+      </Link>
       <div className="flex justify-between items-center px-5 mt-5">
         <p className="text-2xl font-bold">{machine.name}</p>
         <div className="bg-slate-200">
           <i className="ri-heart-line" style={{ fontSize: '27px' }}></i>
         </div>
       </div>
-      <p className="text-xs px-5 mt-2 w-[90%]">
-        {machine.description}
-      </p>
+      <p className="text-xs px-5 mt-2 w-[90%]">{machine.description}</p>
       {/* <p>{machine._id}</p> */}
       <button className="bg-blue-200 mt-5 p-2 mr-2 float-end hover:bg-blue-400" onClick={openModal}>
         Book Now
@@ -86,13 +86,13 @@ const ProductCard = ({ machine }) => {
           value={selectedDate}
         /> */}
         <div className='flex mt-1 gap-2'>
-        <p className='mt-1'>Date:</p>
-        <TextField
-          id="standard-search"
-          type="date"
-          variant="standard"
-          placeholder="Enter Date (DD)"
-        />
+          <p className='mt-1'>Date:</p>
+          <TextField
+            id="standard-search"
+            type="date"
+            variant="standard"
+            placeholder="Enter Date (DD)"
+          />
         </div>
         <p>Availability: {(machine.availability)}</p>
         <br></br>

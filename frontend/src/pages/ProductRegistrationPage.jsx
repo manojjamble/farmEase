@@ -169,7 +169,7 @@ function ProductRegistrationPage() {
                     name="category"
                     value={machineDetails.category}
                     onChange={handleChange}
-                    placeholder="tractor / harvestor"
+                    placeholder="tractor / harvester"
                   />
                 </div>
                 {/* Availability */}

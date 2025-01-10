@@ -110,6 +110,6 @@ Technologies include MongoDB, HTML/CSS/JavaScript/React, Node.js, servers, and c
 
 ## Contributing
 
-* [Murtuza Kapasi](https://github.com/MurtuzaKapasi)
+* Om Hedau
 * Manoj jamble
 * Mahesh Kakde

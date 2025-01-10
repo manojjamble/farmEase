@@ -35,6 +35,8 @@ import axios from "axios";
 //   }, [id]);
 
 
+//updates in the frontend ui at product detail page
+
 //   return (
 //     <div>
 //       <div className="mb-24">
